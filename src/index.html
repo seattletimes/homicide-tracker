@@ -13,7 +13,102 @@
       <%= t.include("partials/_gtmNoScript.html") %>
     <% } %>
     <responsive-child>
-      <!-- content goes here -->
+     <div>
+       <h2 class="title">Homicide Tracker Map</h2>
+       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus at varius odio. Mauris pulvinar justo eget mauris imperdiet, id vestibulum diam posuere. Sed aliquam, justo vel tempor laoreet, metus felis interdum dolor, eu sollicitudin ex eros in orci. Duis lobortis rhoncus justo, porttitor gravida ex tincidunt vitae. Ut ac nisi tempus, pretium leo eu, feugiat orci. Quisque posuere lorem nec dui convallis, commodo commodo nisi dignissim. Nullam nisi ipsum, gravida sit amet tincidunt id, elementum vitae quam.</p>
+      </div>
+      <div class="filter-container">
+        <p>Select from the drop down menus to filter the map</p>
+      <div class="filters">
+      <!-- Search for cities? Filter out all others? or just move to city and highlight? -->
+      <div class="city">
+        <select>
+          <option>City</option>
+          <option>Seattle</option>
+          <option>Tacoma</option>
+          <option>Aberdeen</option>
+          <option>Sequim</option>
+          <option>Olympia</option>
+          <option>Vancouver</option>
+          <option>Chelan</option>
+          <option>Pullman</option>
+        </select>
+      </div>
+
+      <!-- What gener choices -->
+      <div class="gender">
+        <select>
+          <option>Gender</option>
+          <option>Male</option>
+          <option>Nonbinary</option>
+          <option>Female</option>
+          <option>Other</option>
+        </select>
+      </div>
+
+      <!-- what age choices? Range? -->
+      <div class="age">
+        <select>
+          <option>Age</option>
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+          <option>5</option>
+          <option>6</option>
+          <option>7</option>
+        </select>
+      </div>
+
+      <div class="cause">
+        <select>
+          <option>Cause</option>
+          <option>cause</option>
+          <option>cause</option>
+          <option>cause</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="map-container">
+    <%= t.include("partials/_map.html") %>
+  </div>
+
+ 
+  <div class="data-table-container">
+    <div class="data-table-header">
+        <div>Date</div> 
+        <div>Time</div> 
+        <div>Location</div> 
+        <div>Victim</div>
+    </div>
+   <!-- replace with loop to create each row -->
+  <div class="data-table"> 
+    <button class="accordion">
+      <div class="row-title">
+        <div>03/19/2019</div> 
+        <div>02:00</div> 
+        <div>Space Needle</div> 
+        <div>55 yo male</div>
+      </div>
+    </button>
+      <div class="panel">
+      <p>Lorem ipsum...</p>
+    </div>
+
+    <button class="accordion">Section 2</button>
+      <div class="panel">
+      <p>Lorem ipsum...</p>
+    </div>
+
+    <button class="accordion">Section 3</button>
+      <div class="panel">
+      <p>Lorem ipsum...</p>
+    </div>
+  </div>
+</div>
+
     </responsive-child>
 
     <script src="app.js" async></script>
