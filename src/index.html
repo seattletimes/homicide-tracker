@@ -13,13 +13,15 @@
       <%= t.include("partials/_gtmNoScript.html") %>
     <% } %>
     <responsive-child>
-     <div>
+     <%= t.include("partials/_nav.html") %>
+     <div class="head-content">
        <h2 class="title">Homicide Tracker Map</h2>
        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus at varius odio. Mauris pulvinar justo eget mauris imperdiet, id vestibulum diam posuere. Sed aliquam, justo vel tempor laoreet, metus felis interdum dolor, eu sollicitudin ex eros in orci. Duis lobortis rhoncus justo, porttitor gravida ex tincidunt vitae. Ut ac nisi tempus, pretium leo eu, feugiat orci. Quisque posuere lorem nec dui convallis, commodo commodo nisi dignissim. Nullam nisi ipsum, gravida sit amet tincidunt id, elementum vitae quam.</p>
+       <p>Select from the drop down menus to filter the map</p>
       </div>
+
+      <div class="filter-map-container">
       <div class="filter-container">
-        <p>Select from the drop down menus to filter the map</p>
-      <div class="filters">
       <!-- Search for cities? Filter out all others? or just move to city and highlight? -->
       <div class="city">
         <select>
@@ -69,12 +71,9 @@
         </select>
       </div>
     </div>
-  </div>
 
-  <div class="map-container">
     <%= t.include("partials/_map.html") %>
   </div>
-
  
   <div class="data-table-container">
     <div class="data-table-header">
@@ -97,17 +96,35 @@
       <p>Lorem ipsum...</p>
     </div>
 
-    <button class="accordion">Section 2</button>
+    <button class="accordion">
+      <div class="row-title">
+        <div>03/19/2019</div> 
+        <div>02:00</div> 
+        <div>Space Needle</div> 
+        <div>55 yo male</div>
+      </div>
+    </button>
+      <div class="panel">
+      <p>Lorem ipsum...</p>
+    </div>
+   
+
+    <button class="accordion">
+      <div class="row-title">
+        <div>03/19/2019</div> 
+        <div>02:00</div> 
+        <div>Space Needle</div> 
+        <div>55 yo male</div>
+      </div>
+    </button>
       <div class="panel">
       <p>Lorem ipsum...</p>
     </div>
 
-    <button class="accordion">Section 3</button>
-      <div class="panel">
-      <p>Lorem ipsum...</p>
-    </div>
+    <div class="more-rows">Click to see more</div>
   </div>
 </div>
+<%= t.include("partials/_navBottom.html") %>
 
     </responsive-child>
 

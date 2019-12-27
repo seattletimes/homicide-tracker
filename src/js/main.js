@@ -9,7 +9,14 @@ var L = element.leaflet;
 var map = element.map;
 
 
-var data = require("./test.geo.json");
+var mapData = require("./test.geo.json");
+var pointData = require("../../data/Sheet1.sheet.json");
+// "geometry": { "type": "Point", "coordinates": [ 47.5992456, -122.3276425 ] } }
+for(var x = 0; x<pointData.length; x++){
+  pointData[x].geometry = {"type": "Point", "coordinates": [ pointData[x].lat, pointData[x].lng  ]};
+}
+console.log(pointData);
+
 
 var mapElement = document.querySelector("leaflet-map");
 console.log(mapElement);
@@ -47,7 +54,7 @@ if (mapElement) {
       return s;
     }
   
-    var geojson = L.geoJson(data, {
+    var geojson = L.geoJson(mapData, {
       style: style,
       onEachFeature: onEachFeature
     }).addTo(map);
