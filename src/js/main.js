@@ -19,46 +19,38 @@ console.log(pointData);
 
 
 var mapElement = document.querySelector("leaflet-map");
-console.log(mapElement);
 
-if (mapElement) {
-    var L = mapElement.leaflet;
-    var map = mapElement.map;
+var L = mapElement.leaflet;
+var map = mapElement.map;
+
+map.scrollWheelZoom.disable();
   
-    map.scrollWheelZoom.disable();
-  
-    var onEachFeature = function(feature, layer) {
-      var focused = false;
-      var popup = false;
-  
-      layer.on({
-          mouseover: function(e) {
-              layer.setStyle({ weight: 2.5, fillOpacity: 1 });
-          },
-          mouseout: function(e) {
-              if (focused && focused == layer) { return }
-              layer.setStyle({ weight: 1.5, fillOpacity: 0.4});
-          }
-      });
-  };
-  
-  
-    var style = function(feature) {
-      var s = {
-        fillColor: "white",
-        weight: 1,
-        opacity: .3,
-        color: '#000',
-        fillOpacity: 0.45
-      };
-      return s;
-    }
-  
-    var geojson = L.geoJson(mapData, {
-      style: style,
-      onEachFeature: onEachFeature
-    }).addTo(map);
+function getColor(d) {
+  return "pink";
+}
+
+function geojsonMarkerOptions(feature) {
+  return {
+    radius: 7,
+    fillColor: getColor(feature.properties),
+    color: "#ffffff",
+    weight: 1,
+    opacity: 1,
+    fillOpacity: 0.75
   }
+};  
+
+
+var markers = [];
+var markergroup = L.featureGroup()
+
+for( var x = 0; x<pointData.length; x++){
+  var marker = L.circleMarker([pointData[x].lat, pointData[x].lng]);
+
+    markers.push(marker);
+    marker.addTo(markergroup);
+}
+  markergroup.addTo(map);
   
    map.scrollWheelZoom.disable();
 
