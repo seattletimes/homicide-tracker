@@ -9,13 +9,15 @@ var cityHTML = document.querySelector(".city");
 var selectCity = document.querySelector(".city select");
 var selectGender = document.querySelector(".gender select");
 var mapElement = document.querySelector("leaflet-map");
+var clearFiltersButton = document.querySelector(".clear-filters");
 var L = mapElement.leaflet;
 var map = mapElement.map;
 
 var mapData = require("./test.geo.json");
 var pointData = require("../../data/Sheet1.sheet.json");
-var cities = [];
 
+//make list of cities to include on drop down use this for all other select menus
+var cities = [];
 for(var x = 0; x<pointData.length; x++){
   pointData[x].geometry = {"type": "Point", "coordinates": [ pointData[x].lat, pointData[x].lng  ]};
   if(cities.indexOf(pointData[x].city) < 0){
@@ -23,6 +25,7 @@ for(var x = 0; x<pointData.length; x++){
   }
 }
 
+//construct HTML for select menu general
 function makeSelect(label, list){
   var elementHTML = "<option value='' selected disabled hidden>" + label + "</option>"
   for(var x = 0; x < list.length; x++){
@@ -33,8 +36,10 @@ function makeSelect(label, list){
 
 selectCity.innerHTML = makeSelect("City", cities);
 
+//define list of filters to be used
 var filters;
 function filter(){
+  console.log("Checking filters");
   filters = {"City": "", "Gender": ""};
   if(selectCity.value != "City"){
     filters["City"] = (selectCity.value);
@@ -43,14 +48,13 @@ function filter(){
     filters["Gender"] = (selectGender.value);
   }
   // add age and cause
+  console.log("filters: City: " + filters.City + " Gender: " + filters.Gender);
   addMarks();
 }
 
-selectCity.addEventListener("change", filter);
-selectGender.addEventListener("change", filter);
-
 map.scrollWheelZoom.disable();
   
+//edit this to determine if new, officer involved, or other
 function getColor(d) {
   return "pink";
 }
@@ -64,32 +68,72 @@ function geojsonMarkerOptions(feature) {
     opacity: 1,
     fillOpacity: 0.75
   }
-};  
+}  
 
 var markers = [];
-var markergroup = L.featureGroup()
+var markergroup = L.featureGroup();
+var marker;
+
 
 function addMarks(){
   markergroup.clearLayers();
-  console.log(filters);
-  for( var x = 0; x<pointData.length; x++){
-    var marker = null;
-    var mark = true;
-    if(!(filters.Gender != "" && pointData[x].victim_gender == filters.Gender)){
-      console.log(pointData[x].victim_gender);
-      mark = false;
-    }
-    if(!(filters.City != "" && pointData[x].city == filters.City && mark != false)){
-      mark = false;
-    }
-    if(mark){
-      marker = L.circleMarker([pointData[x].lat, pointData[x].lng]);
-      markers.push(marker);
-      marker.addTo(markergroup);
-    }
+
+  if(filters.Gender == "" && filters.City == ""){
+    addAllMarks();
+  }
+  else{
+    for( var x = 0; x<pointData.length; x++){
+        marker = null;
+        var mark = true;
+        if(filters.Gender != ""){
+          if(pointData[x].victim_gender != filters.Gender){
+            mark = false;
+          }
+        }
+        if(filters.City != "" && mark != false){
+          if(pointData[x].city != filters.City){
+            mark = false;
+          }
+        }
+
+
+
+
+
+        // if(!(filters.Gender != "" && pointData[x].victim_gender == filters.Gender)){
+        //   mark = false;
+        // }
+        // if(!(filters.City != "" && pointData[x].city == filters.City && mark != false)){
+        //   mark = false;
+        // }
+        if(mark){
+          marker = L.circleMarker([pointData[x].lat, pointData[x].lng]);
+          markers.push(marker);
+          marker.addTo(markergroup);
+        }
+      }
+    markergroup.addTo(map);
+  }
+}
+
+function addAllMarks(){
+  markergroup.clearLayers();
+  for(var x = 0; x<pointData.length; x++){
+    marker = L.circleMarker([pointData[x].lat, pointData[x].lng]);
+    markers.push(marker);
+    marker.addTo(markergroup);
   }
   markergroup.addTo(map);
 }
+
+selectCity.addEventListener("change", filter);
+selectGender.addEventListener("change", filter);
+window.addEventListener("load", addAllMarks);
+clearFiltersButton.addEventListener("click", function(){
+  selectCity.selectedIndex = 0;
+  selectGender.selectedIndex = 0;
+  filter();
+})
 
 
 map.scrollWheelZoom.disable();
