@@ -95,17 +95,6 @@ function addMarks(){
             mark = false;
           }
         }
-
-
-
-
-
-        // if(!(filters.Gender != "" && pointData[x].victim_gender == filters.Gender)){
-        //   mark = false;
-        // }
-        // if(!(filters.City != "" && pointData[x].city == filters.City && mark != false)){
-        //   mark = false;
-        // }
         if(mark){
           marker = L.circleMarker([pointData[x].lat, pointData[x].lng]);
           markers.push(marker);
@@ -135,8 +124,29 @@ clearFiltersButton.addEventListener("click", function(){
   filter();
 })
 
-
 map.scrollWheelZoom.disable();
+
+
+//Create data table
+function makeDataRow(element){
+  var rowHTML = "<button class='accordion'> <div class='row-title'> <div>" + element.date + "</div> <div>"
+                 + element.time + "</div> <div>"
+                 + element.city + "</div> <div>"
+                 + element.victim_name + ", " + element.victim_age + "</div> </div> </button>"
+                 + "<div class='panel'> <p>" + element.description + "</p> </div>";
+  return rowHTML;
+}
+
+function makeDataTable(){
+  var dataTableHTML = "";
+  for(var x = 0; x < pointData.length; x++){
+    dataTableHTML += makeDataRow(pointData[x]);
+  }
+  return dataTableHTML;
+}
+
+var dataTable = document.querySelector(".data-table");
+dataTable.innerHTML = makeDataTable();
 
 var acc = document.getElementsByClassName("accordion");
 var i;
@@ -152,5 +162,3 @@ for (i = 0; i < acc.length; i++) {
     }
   });
 }
-  
-  
