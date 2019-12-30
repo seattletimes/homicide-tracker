@@ -16,14 +16,23 @@ var map = mapElement.map;
 var mapData = require("./test.geo.json");
 var pointData = require("../../data/Sheet1.sheet.json");
 
+
+
 //make list of cities to include on drop down use this for all other select menus
 var cities = [];
 for(var x = 0; x<pointData.length; x++){
-  pointData[x].geometry = {"type": "Point", "coordinates": [ pointData[x].lat, pointData[x].lng  ]};
+  if(pointData[x].date){
+    var date = pointData[x].date;
+    date.replace("/", "-");
+    date = new Date(date);
+    pointData[x].date = date;
+  }
   if(cities.indexOf(pointData[x].city) < 0){
     cities.push(pointData[x].city);
   }
 }
+pointData = pointData.sort(function (a, b){return b.date - a.date});
+
 
 //construct HTML for select menu general
 function makeSelect(label, list){
