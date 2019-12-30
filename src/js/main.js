@@ -5,7 +5,6 @@ require("component-responsive-frame/child");
 require("component-leaflet-map");
 
 
-var cityHTML = document.querySelector(".city");
 var selectCity = document.querySelector(".city select");
 var selectGender = document.querySelector(".gender select");
 var mapElement = document.querySelector("leaflet-map");
@@ -13,10 +12,7 @@ var clearFiltersButton = document.querySelector(".clear-filters");
 var L = mapElement.leaflet;
 var map = mapElement.map;
 
-var mapData = require("./test.geo.json");
 var pointData = require("../../data/Sheet1.sheet.json");
-
-
 
 //make list of cities to include on drop down use this for all other select menus
 var cities = [];
@@ -25,13 +21,13 @@ for(var x = 0; x<pointData.length; x++){
     var date = pointData[x].date;
     date.replace("/", "-");
     date = new Date(date);
-    pointData[x].date = date;
+    pointData[x].sort_date = date;
   }
   if(cities.indexOf(pointData[x].city) < 0){
     cities.push(pointData[x].city);
   }
 }
-pointData = pointData.sort(function (a, b){return b.date - a.date});
+pointData = pointData.sort(function (a, b){return b.sort_date - a.sort_date});
 
 
 //construct HTML for select menu general
@@ -82,6 +78,12 @@ function geojsonMarkerOptions(feature) {
 var markers = [];
 var markergroup = L.featureGroup();
 var marker;
+var customCircleMarker = L.CircleMarker.extend({
+  options: {
+    index: x,
+    active: false
+  }
+})
 
 
 function addMarks(){
@@ -92,7 +94,6 @@ function addMarks(){
   }
   else{
     for( var x = 0; x<pointData.length; x++){
-        marker = null;
         var mark = true;
         if(filters.Gender != ""){
           if(pointData[x].victim_gender != filters.Gender){
@@ -105,19 +106,20 @@ function addMarks(){
           }
         }
         if(mark){
-          marker = L.circleMarker([pointData[x].lat, pointData[x].lng]);
+          marker = new customCircleMarker([pointData[x].lat, pointData[x].lng], {index: x, active: false}).on("click", markerClick);
           markers.push(marker);
           marker.addTo(markergroup);
         }
       }
-    markergroup.addTo(map);
+    markergroup.addTo(map).on("click", function(){console.log("clicked");});
   }
 }
 
 function addAllMarks(){
   markergroup.clearLayers();
   for(var x = 0; x<pointData.length; x++){
-    marker = L.circleMarker([pointData[x].lat, pointData[x].lng]);
+    marker = new customCircleMarker([pointData[x].lat, pointData[x].lng], {index: x, active: false}).on("click", markerClick);
+
     markers.push(marker);
     marker.addTo(markergroup);
   }
@@ -135,6 +137,11 @@ clearFiltersButton.addEventListener("click", function(){
 
 map.scrollWheelZoom.disable();
 
+function markerClick(event){
+  console.log(event);
+
+
+}
 
 //Create data table
 function makeDataRow(element){
