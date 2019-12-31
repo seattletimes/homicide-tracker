@@ -12,6 +12,8 @@ var mapElement = document.querySelector("leaflet-map");
 var L = mapElement.leaflet;
 var map = mapElement.map;
 var clearFiltersButton = document.querySelector(".clear-filters");
+var clearSelection = document.querySelector(".clear-search");
+var clickToSee = document.querySelector(".more-rows");
 
 
 //make lists to include in drop downs, and sort data for display
@@ -144,19 +146,41 @@ function markerClick(){
   selectedHomicide.innerHTML = activeText;
   selectedHomicideContainer.style = "display:flex";
   this.setStyle({fillOpacity: 1});
-
+  var selectedRow = makeDataRow(pointData[this.options.index]);
+  dataTable.innerHTML = selectedRow;
+  var selectedPanel = document.querySelector(".panel");
+  selectedPanel.style = "max-height:" + (document.querySelector(".panel p").scrollHeight + 50) + "px";
+  clickToSee.style.display = "none";
 }
 
 selectCity.addEventListener("change", filter);
 selectGender.addEventListener("change", filter);
 window.addEventListener("load", addAllMarks);
 
-clearFiltersButton.addEventListener("click", function(){
+clearFiltersButton.addEventListener("click", clear);
+clearSelection.addEventListener("click", clear);
+
+
+function clear(){
+  clickToSee.style.display = "block";
+  dataTable.innerHTML = makeDataTable();
+  var i;
+  for (i = 0; i < acc.length; i++) {
+    acc[i].addEventListener("click", function() {
+      this.classList.toggle("active");
+      var panel = this.nextElementSibling;
+      if (panel.style.maxHeight) {
+        panel.style.maxHeight = null;
+      } else {
+        panel.style.maxHeight = panel.scrollHeight + "px";
+      }
+    });
+  }
   selectedHomicideContainer.style = "display:none";
   selectCity.selectedIndex = 0;
   selectGender.selectedIndex = 0;
   filter();
-})
+}
 
 map.scrollWheelZoom.disable();
 
