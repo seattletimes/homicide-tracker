@@ -64,6 +64,25 @@ body{
   border: 1px solid rgb(169, 169, 169);
   width: 100px;
 }
+.legend{
+  font-size: 16px ;
+}
+.dot{
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  display: inline-block;
+  opacity: .7;
+  &.police{
+    background-color: blue;
+  }
+  &.new{
+    background-color: green;
+  }
+  &.other{
+    background-color: black;
+  }
+}
 }
 
 select:hover{
@@ -128,6 +147,11 @@ leaflet-map {
     }
 }
 
+.data-table-container{
+  max-width: 960px;
+  margin: auto;
+}
+
 .accordion {
     background-color: #eee;
     color: #444;
@@ -156,6 +180,8 @@ leaflet-map {
     padding: 0 18px;
     background-color: white;
     max-height: 0;
+    max-width: 630px;
+    margin: auto;
     overflow: hidden;
     transition: max-height 0.2s ease-out;
   }

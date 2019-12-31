@@ -14,7 +14,7 @@ var map = mapElement.map;
 var clearFiltersButton = document.querySelector(".clear-filters");
 
 
-//make list of cities to include on drop down use this for all other select menus and sort pointData
+//make lists to include in drop downs, and sort data for display
 var cities = [];
 for(var x = 0; x<pointData.length; x++){
   if(pointData[x].date){
@@ -31,7 +31,6 @@ for(var x = 0; x<pointData.length; x++){
 //sort data
 pointData = pointData.sort(function (a, b){return b.sort_date - a.sort_date});
 
-
 //construct HTML for select menu general
 function makeSelect(label, list){
   var elementHTML = "<option value='' selected disabled hidden>" + label + "</option>"
@@ -40,50 +39,28 @@ function makeSelect(label, list){
   }
   return elementHTML;
 }
+//select drop downs
 selectCity.innerHTML = makeSelect("City", cities);
 
-//define list of filters to be used and apply to markers
-var filters;
-function filter(){
-  console.log("Checking filters");
-  filters = {"City": "", "Gender": ""};
-  if(selectCity.value != "City"){
-    filters["City"] = (selectCity.value);
-  }
-  if(selectGender.value != "Gender"){
-    filters["Gender"] = (selectGender.value);
-  }
-  // add age and cause
-  console.log("filters: City: " + filters.City + " Gender: " + filters.Gender);
-  addMarks();
-}
-
 map.scrollWheelZoom.disable();
-  
-//edit this to determine if new, officer involved, or other
-// function getColor(d) {
-//   if(d.officer_involved == "y"){
-//     return "blue";
-//   } 
-//   var today = new Date();
-//   var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-//   if()
-// }
-
-function geojsonMarkerOptions(feature) {
-  return {
-    radius: 7,
-    fillColor: getColor(feature.properties),
-    color: "#ffffff",
-    weight: 1,
-    opacity: 1,
-    fillOpacity: 0.75
-  }
-}  
 
 var markers = [];
 var markergroup = L.featureGroup();
 var marker;
+
+function addAllMarks(){
+  markergroup.clearLayers();
+  for(var x = 0; x<pointData.length; x++){
+    marker = L.circleMarker([pointData[x].lat, pointData[x].lng], {
+      fillColor: getColor(pointData[x]),
+      fillOpacity: .4,
+      stroke: false
+      }).on("click", markerClick);
+    markers.push(marker);
+    marker.addTo(markergroup);
+  }
+  markergroup.addTo(map);
+}
 
 function addMarks(){
   markergroup.clearLayers();
@@ -105,7 +82,11 @@ function addMarks(){
           }
         }
         if(mark){
-          marker = L.circleMarker([pointData[x].lat, pointData[x].lng]).on("click", markerClick);
+          marker = L.circleMarker([pointData[x].lat, pointData[x].lng], {
+            fillColor: getColor(pointData[x]),
+            fillOpacity: .4,
+            stroke: false
+            }).on("click", markerClick);          
           markers.push(marker);
           marker.addTo(markergroup);
         }
@@ -116,9 +97,9 @@ function addMarks(){
 
 function getColor(element){
   if (element.officer_involved && element.officer_involved != ""){
-    return "blue";
+    return  "blue";
   }
-  else if(pointData.indexOf(element) < 3){
+  else if(element.new && element.new == "x"){
     return "green";
   }
   else{
@@ -126,30 +107,19 @@ function getColor(element){
   }
 }
 
-function addAllMarks(){
-  markergroup.clearLayers();
-  for(var x = 0; x<pointData.length; x++){
-    marker = L.circleMarker([pointData[x].lat, pointData[x].lng], {
-      fillColor: getColor(pointData[x]),
-      fillOpacity: .4,
-      stroke: false
-      }).on("click", markerClick);
-    markers.push(marker);
-    marker.addTo(markergroup);
+//define list of filters to be used and apply to markers
+var filters;
+function filter(){
+  filters = {"City": "", "Gender": ""};
+  if(selectCity.value != "City"){
+    filters["City"] = (selectCity.value);
   }
-  markergroup.addTo(map);
+  if(selectGender.value != "Gender"){
+    filters["Gender"] = (selectGender.value);
+  }
+  // add age and cause
+  addMarks();
 }
-
-selectCity.addEventListener("change", filter);
-selectGender.addEventListener("change", filter);
-window.addEventListener("load", addAllMarks);
-clearFiltersButton.addEventListener("click", function(){
-  selectCity.selectedIndex = 0;
-  selectGender.selectedIndex = 0;
-  filter();
-})
-
-map.scrollWheelZoom.disable();
 
 function markerClick(){
   for(var x = 0; x < markers.length; x++){
@@ -162,6 +132,17 @@ function markerClick(){
   }
   this.setStyle({fillOpacity: 1})
 }
+
+selectCity.addEventListener("change", filter);
+selectGender.addEventListener("change", filter);
+window.addEventListener("load", addAllMarks);
+clearFiltersButton.addEventListener("click", function(){
+  selectCity.selectedIndex = 0;
+  selectGender.selectedIndex = 0;
+  filter();
+})
+
+map.scrollWheelZoom.disable();
 
 //Create data table
 function makeDataRow(element){
