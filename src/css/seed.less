@@ -139,6 +139,30 @@ leaflet-map {
   }
 }
 
+.selected-homicide-container{
+  border: 1px solid rgb(175, 175, 175);
+  font-size: 16px;
+  background-color: #eee;
+  flex-wrap: wrap;
+  display: none;
+  .selected-homicide-text{
+    margin: 0;
+    padding: 3px;
+  }
+    .clear-search{
+      padding: 3px;
+      background-color: transparent;
+      border: none;
+      .icon{
+        width: 16px;
+        &:hover{
+          cursor: pointer;
+        }
+      }
+    }
+}
+
+
 .data-table-header{
     display: flex;
     margin-bottom: 10px;
@@ -146,6 +170,7 @@ leaflet-map {
         margin: auto;
     }
 }
+
 
 .data-table-container{
   max-width: 960px;

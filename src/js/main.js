@@ -50,11 +50,13 @@ var marker;
 
 function addAllMarks(){
   markergroup.clearLayers();
+  markers = [];
   for(var x = 0; x<pointData.length; x++){
     marker = L.circleMarker([pointData[x].lat, pointData[x].lng], {
       fillColor: getColor(pointData[x]),
       fillOpacity: .4,
-      stroke: false
+      stroke: false,
+      index: x
       }).on("click", markerClick);
     markers.push(marker);
     marker.addTo(markergroup);
@@ -64,6 +66,7 @@ function addAllMarks(){
 
 function addMarks(){
   markergroup.clearLayers();
+  markers = [];
 
   if(filters.Gender == "" && filters.City == ""){
     addAllMarks();
@@ -85,13 +88,14 @@ function addMarks(){
           marker = L.circleMarker([pointData[x].lat, pointData[x].lng], {
             fillColor: getColor(pointData[x]),
             fillOpacity: .4,
-            stroke: false
+            stroke: false,
+            index: x
             }).on("click", markerClick);          
           markers.push(marker);
           marker.addTo(markergroup);
         }
       }
-    markergroup.addTo(map).on("click", function(){console.log("clicked");});
+    markergroup.addTo(map);
   }
 }
 
@@ -121,7 +125,12 @@ function filter(){
   addMarks();
 }
 
+var selectedHomicide = document.querySelector(".selected-homicide");
+var selectedHomicideContainer = document.querySelector(".selected-homicide-container");
+
 function markerClick(){
+  console.log(markers);
+  var active, activeText;
   for(var x = 0; x < markers.length; x++){
     if (markers[x] == this){
       this.setStyle({fillOpacity: 1});
@@ -130,13 +139,20 @@ function markerClick(){
       markers[x].setStyle({fillOpacity: .4});
     }
   }
-  this.setStyle({fillOpacity: 1})
+  activeText = "<p class='selected-homicide-text'>" + pointData[this.options.index].date + " | " 
+              + pointData[this.options.index].victim_name + " </p>";
+  selectedHomicide.innerHTML = activeText;
+  selectedHomicideContainer.style = "display:flex";
+  this.setStyle({fillOpacity: 1});
+
 }
 
 selectCity.addEventListener("change", filter);
 selectGender.addEventListener("change", filter);
 window.addEventListener("load", addAllMarks);
+
 clearFiltersButton.addEventListener("click", function(){
+  selectedHomicideContainer.style = "display:none";
   selectCity.selectedIndex = 0;
   selectGender.selectedIndex = 0;
   filter();
