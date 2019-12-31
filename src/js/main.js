@@ -114,10 +114,26 @@ function addMarks(){
   }
 }
 
+function getColor(element){
+  if (element.officer_involved && element.officer_involved != ""){
+    return "blue";
+  }
+  else if(pointData.indexOf(element) < 3){
+    return "green";
+  }
+  else{
+    return "black";
+  }
+}
+
 function addAllMarks(){
   markergroup.clearLayers();
   for(var x = 0; x<pointData.length; x++){
-    marker = L.circleMarker([pointData[x].lat, pointData[x].lng]).on("click", markerClick);
+    marker = L.circleMarker([pointData[x].lat, pointData[x].lng], {
+      fillColor: getColor(pointData[x]),
+      fillOpacity: .4,
+      stroke: false
+      }).on("click", markerClick);
     markers.push(marker);
     marker.addTo(markergroup);
   }
@@ -135,16 +151,23 @@ clearFiltersButton.addEventListener("click", function(){
 
 map.scrollWheelZoom.disable();
 
-function markerClick(event){
-  console.log(event);
-
+function markerClick(){
+  for(var x = 0; x < markers.length; x++){
+    if (markers[x] == this){
+      this.setStyle({fillOpacity: 1});
+    }
+    else{
+      markers[x].setStyle({fillOpacity: .4});
+    }
+  }
+  this.setStyle({fillOpacity: 1})
 }
 
 //Create data table
 function makeDataRow(element){
   var rowHTML = "<button class='accordion'> <div class='row-title'> <div>" + element.date + "</div> <div>"
                  + element.time + "</div> <div>"
-                 + element.city + "</div> <div>"
+                 + element.location + "</div> <div>"
                  + element.victim_name + ", " + element.victim_age + "</div> </div> </button>"
                  + "<div class='panel'> <p>" + element.description + "</p> </div>";
   return rowHTML;
