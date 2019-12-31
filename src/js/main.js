@@ -4,17 +4,17 @@ setTimeout(() => paywall(12345678), 5000);
 require("component-responsive-frame/child");
 require("component-leaflet-map");
 
+var pointData = require("../../data/Sheet1.sheet.json");
 
 var selectCity = document.querySelector(".city select");
 var selectGender = document.querySelector(".gender select");
 var mapElement = document.querySelector("leaflet-map");
-var clearFiltersButton = document.querySelector(".clear-filters");
 var L = mapElement.leaflet;
 var map = mapElement.map;
+var clearFiltersButton = document.querySelector(".clear-filters");
 
-var pointData = require("../../data/Sheet1.sheet.json");
 
-//make list of cities to include on drop down use this for all other select menus
+//make list of cities to include on drop down use this for all other select menus and sort pointData
 var cities = [];
 for(var x = 0; x<pointData.length; x++){
   if(pointData[x].date){
@@ -27,6 +27,8 @@ for(var x = 0; x<pointData.length; x++){
     cities.push(pointData[x].city);
   }
 }
+
+//sort data
 pointData = pointData.sort(function (a, b){return b.sort_date - a.sort_date});
 
 
@@ -38,10 +40,9 @@ function makeSelect(label, list){
   }
   return elementHTML;
 }
-
 selectCity.innerHTML = makeSelect("City", cities);
 
-//define list of filters to be used
+//define list of filters to be used and apply to markers
 var filters;
 function filter(){
   console.log("Checking filters");
@@ -60,9 +61,14 @@ function filter(){
 map.scrollWheelZoom.disable();
   
 //edit this to determine if new, officer involved, or other
-function getColor(d) {
-  return "pink";
-}
+// function getColor(d) {
+//   if(d.officer_involved == "y"){
+//     return "blue";
+//   } 
+//   var today = new Date();
+//   var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+//   if()
+// }
 
 function geojsonMarkerOptions(feature) {
   return {
@@ -78,13 +84,6 @@ function geojsonMarkerOptions(feature) {
 var markers = [];
 var markergroup = L.featureGroup();
 var marker;
-var customCircleMarker = L.CircleMarker.extend({
-  options: {
-    index: x,
-    active: false
-  }
-})
-
 
 function addMarks(){
   markergroup.clearLayers();
@@ -106,7 +105,7 @@ function addMarks(){
           }
         }
         if(mark){
-          marker = new customCircleMarker([pointData[x].lat, pointData[x].lng], {index: x, active: false}).on("click", markerClick);
+          marker = L.circleMarker([pointData[x].lat, pointData[x].lng]).on("click", markerClick);
           markers.push(marker);
           marker.addTo(markergroup);
         }
@@ -118,8 +117,7 @@ function addMarks(){
 function addAllMarks(){
   markergroup.clearLayers();
   for(var x = 0; x<pointData.length; x++){
-    marker = new customCircleMarker([pointData[x].lat, pointData[x].lng], {index: x, active: false}).on("click", markerClick);
-
+    marker = L.circleMarker([pointData[x].lat, pointData[x].lng]).on("click", markerClick);
     markers.push(marker);
     marker.addTo(markergroup);
   }
@@ -139,7 +137,6 @@ map.scrollWheelZoom.disable();
 
 function markerClick(event){
   console.log(event);
-
 
 }
 
