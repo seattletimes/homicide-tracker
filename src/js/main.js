@@ -6,18 +6,28 @@ require("component-leaflet-map");
 
 var pointData = require("../../data/Sheet1.sheet.json");
 
+//DOM elements
 var selectCity = document.querySelector(".city select");
 var selectGender = document.querySelector(".gender select");
 var mapElement = document.querySelector("leaflet-map");
-var L = mapElement.leaflet;
-var map = mapElement.map;
 var clearFiltersButton = document.querySelector(".clear-filters");
 var clearSelection = document.querySelector(".clear-search");
 var clickToSee = document.querySelector(".more-rows");
+var selectedHomicide = document.querySelector(".selected-homicide");
+var selectedHomicideContainer = document.querySelector(".selected-homicide-container");
+
+//global vars
+var L = mapElement.leaflet;
+var map = mapElement.map;
+var cities = [];
+var markers = [];
+var markergroup = L.featureGroup();
+var marker;
+var filters;
+
 
 
 //make lists to include in drop downs, and sort data for display
-var cities = [];
 for(var x = 0; x<pointData.length; x++){
   if(pointData[x].date){
     var date = pointData[x].date;
@@ -45,10 +55,6 @@ function makeSelect(label, list){
 selectCity.innerHTML = makeSelect("City", cities);
 
 map.scrollWheelZoom.disable();
-
-var markers = [];
-var markergroup = L.featureGroup();
-var marker;
 
 function addAllMarks(){
   markergroup.clearLayers();
@@ -114,7 +120,6 @@ function getColor(element){
 }
 
 //define list of filters to be used and apply to markers
-var filters;
 function filter(){
   filters = {"City": "", "Gender": ""};
   if(selectCity.value != "City"){
@@ -127,12 +132,9 @@ function filter(){
   addMarks();
 }
 
-var selectedHomicide = document.querySelector(".selected-homicide");
-var selectedHomicideContainer = document.querySelector(".selected-homicide-container");
-
 function markerClick(){
   console.log(markers);
-  var active, activeText;
+  var activeText;
   for(var x = 0; x < markers.length; x++){
     if (markers[x] == this){
       this.setStyle({fillOpacity: 1});
@@ -152,14 +154,6 @@ function markerClick(){
   selectedPanel.style = "max-height:" + (document.querySelector(".panel p").scrollHeight + 50) + "px";
   clickToSee.style.display = "none";
 }
-
-selectCity.addEventListener("change", filter);
-selectGender.addEventListener("change", filter);
-window.addEventListener("load", addAllMarks);
-
-clearFiltersButton.addEventListener("click", clear);
-clearSelection.addEventListener("click", clear);
-
 
 function clear(){
   clickToSee.style.display = "block";
@@ -186,9 +180,9 @@ map.scrollWheelZoom.disable();
 
 //Create data table
 function makeDataRow(element){
-  var rowHTML = "<button class='accordion'> <div class='row-title'> <div>" + element.date + "</div> <div>"
+  var rowHTML = "<button class='accordion'> <div class='row-title'> <div>" + element.date + "</div> <div>" +
                  + element.time + "</div> <div>"
-                 + element.location + "</div> <div>"
+                 + element.city + "</div> <div>"
                  + element.victim_name + ", " + element.victim_age + "</div> </div> </button>"
                  + "<div class='panel'> <p>" + element.description + "</p> </div>";
   return rowHTML;
@@ -219,3 +213,10 @@ for (i = 0; i < acc.length; i++) {
     }
   });
 }
+
+selectCity.addEventListener("change", filter);
+selectGender.addEventListener("change", filter);
+window.addEventListener("load", addAllMarks);
+clearFiltersButton.addEventListener("click", clear);
+clearSelection.addEventListener("click", clear);
+

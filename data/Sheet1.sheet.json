@@ -1,7 +1,7 @@
 [
   {
     "date": "1/3/18",
-    "time": "",
+    "time": "2:00",
     "location": "",
     "city": "Kent",
     "lat": 47.412151,
@@ -21,7 +21,7 @@
   },
   {
     "date": "1/6/2018",
-    "time": "",
+    "time": "19:00",
     "location": "",
     "city": "Burien",
     "lat": 47.4867698,
@@ -49,7 +49,7 @@
   },
   {
     "date": "1/10/2018",
-    "time": "",
+    "time": "8:00",
     "location": "",
     "city": "Tukwila",
     "lat": 47.4659115,
@@ -69,7 +69,7 @@
   },
   {
     "date": "1/15/2018",
-    "time": "",
+    "time": "11:00",
     "location": "",
     "city": "Seattle",
     "lat": 47.706701,
@@ -91,7 +91,7 @@
   },
   {
     "date": "1/23/18",
-    "time": "",
+    "time": "20:00",
     "location": "",
     "city": "Auburn",
     "lat": 47.3229139,
@@ -109,7 +109,7 @@
   },
   {
     "date": "1/27/18",
-    "time": "",
+    "time": "5:00",
     "location": "",
     "city": "Seattle",
     "lat": 47.5201026,
@@ -129,7 +129,7 @@
   },
   {
     "date": "7/26/18",
-    "time": "",
+    "time": "2:00",
     "location": "",
     "city": "Kent",
     "lat": 47.3834023,
@@ -155,7 +155,7 @@
   },
   {
     "date": "9/5/18",
-    "time": "",
+    "time": "9:00",
     "location": "",
     "city": "Issaquah",
     "lat": 47.5277,
