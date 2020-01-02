@@ -15,9 +15,9 @@
     <responsive-child>
      <%= t.include("partials/_nav.html") %>
      <div class="head-content">
-       <h2 class="title">Homicide Tracker Map</h2>
+       <h1 class="title">Homicide Tracker Map</h1>
        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus at varius odio. Mauris pulvinar justo eget mauris imperdiet, id vestibulum diam posuere. Sed aliquam, justo vel tempor laoreet, metus felis interdum dolor, eu sollicitudin ex eros in orci. Duis lobortis rhoncus justo, porttitor gravida ex tincidunt vitae. Ut ac nisi tempus, pretium leo eu, feugiat orci. Quisque posuere lorem nec dui convallis, commodo commodo nisi dignissim. Nullam nisi ipsum, gravida sit amet tincidunt id, elementum vitae quam.</p>
-       <p>Select from the drop down menus to filter the map</p>
+       <p class="directions">Select from the drop down menus to filter the map</p>
       </div>
 
       <div class="filter-map-container">
@@ -29,35 +29,25 @@
         </select>
       </div>
 
-      <div class="gender">
-        <select>
-          <option value='Gender' selected disabled hidden>Gender</option>
-          <option value="Male">Male</option>
-          <option value="Female">Female</option>
-          <option value="Other">Other</option>
-        </select>
-      </div>
-
       <!-- what age choices? Range? -->
       <div class="age">
         <select>
-          <option>Age</option>
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-          <option>4</option>
-          <option>5</option>
-          <option>6</option>
-          <option>7</option>
+          <option selected disabled hidden>Age</option>
+          <option value="0, 5">0 - 5</option>
+          <option value="6, 17">6 - 17</option>
+          <option value="18, 25">18 - 25</option>
+          <option value="26, 50">26 - 49</option>
+          <option value="50">50+</option>
         </select>
       </div>
 
       <div class="cause">
         <select>
-          <option>Cause</option>
-          <option>cause</option>
-          <option>cause</option>
-          <option>cause</option>
+          <option selected disabled hidden>Cause</option>
+          <option value="shooting">Shooting</option>
+          <option value="stabbing">Stabbing</option>
+          <option value="beating">Beating</option>
+          <option value="other">Other</option>
         </select>
       </div>
       <div class="clear">

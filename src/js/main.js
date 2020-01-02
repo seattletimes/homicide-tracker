@@ -8,7 +8,8 @@ var pointData = require("../../data/Sheet1.sheet.json");
 
 //DOM elements
 var selectCity = document.querySelector(".city select");
-var selectGender = document.querySelector(".gender select");
+var selectCause = document.querySelector(".cause select");
+var selectAge = document.querySelector(".age select");
 var mapElement = document.querySelector("leaflet-map");
 var clearFiltersButton = document.querySelector(".clear-filters");
 var clearSelection = document.querySelector(".clear-search");
@@ -43,16 +44,15 @@ for(var x = 0; x<pointData.length; x++){
 //sort data
 pointData = pointData.sort(function (a, b){return b.sort_date - a.sort_date});
 
-//construct HTML for select menu general
-function makeSelect(label, list){
+//construct HTML for city select
+function makeCity(label, list){
   var elementHTML = "<option value='' selected disabled hidden>" + label + "</option>"
   for(var x = 0; x < list.length; x++){
     elementHTML += "<option value='"+ list[x] +"'>"+list[x]+"</option>";
   }
   return elementHTML;
 }
-//select drop downs
-selectCity.innerHTML = makeSelect("City", cities);
+selectCity.innerHTML = makeCity("City", cities);
 
 map.scrollWheelZoom.disable();
 
@@ -63,8 +63,9 @@ function addAllMarks(){
     marker = L.circleMarker([pointData[x].lat, pointData[x].lng], {
       fillColor: getColor(pointData[x]),
       fillOpacity: .4,
-      stroke: false,
-      index: x
+      index: x,
+      weight: 1,
+      color: getColor(pointData[x])
       }).on("click", markerClick);
     markers.push(marker);
     marker.addTo(markergroup);
@@ -76,14 +77,14 @@ function addMarks(){
   markergroup.clearLayers();
   markers = [];
 
-  if(filters.Gender == "" && filters.City == ""){
+  if(filters.Cause == "" && filters.City == "" && filters.Age){
     addAllMarks();
   }
   else{
     for( var x = 0; x<pointData.length; x++){
         var mark = true;
-        if(filters.Gender != ""){
-          if(pointData[x].victim_gender != filters.Gender){
+        if(filters.Cause != ""){
+          if(pointData[x].cause_death != filters.Cause){
             mark = false;
           }
         }
@@ -96,8 +97,9 @@ function addMarks(){
           marker = L.circleMarker([pointData[x].lat, pointData[x].lng], {
             fillColor: getColor(pointData[x]),
             fillOpacity: .4,
-            stroke: false,
-            index: x
+            index: x,
+            weight: 1,
+            color: getColor(pointData[x])
             }).on("click", markerClick);          
           markers.push(marker);
           marker.addTo(markergroup);
@@ -108,27 +110,29 @@ function addMarks(){
 }
 
 function getColor(element){
-  if (element.officer_involved && element.officer_involved != ""){
-    return  "blue";
+  if(element.new && element.new == "x"){
+    return "lime";
   }
-  else if(element.new && element.new == "x"){
-    return "green";
+  else if (element.police_shooting && element.police_shooting != ""){
+    return  "darkorange";
   }
   else{
-    return "black";
+    return "darkolivegreen";
   }
 }
 
 //define list of filters to be used and apply to markers
 function filter(){
-  filters = {"City": "", "Gender": ""};
+  filters = {"City": "", "Cause": "", "Age": ""};
   if(selectCity.value != "City"){
     filters["City"] = (selectCity.value);
   }
-  if(selectGender.value != "Gender"){
-    filters["Gender"] = (selectGender.value);
+  if(selectCause.value != "Cause"){
+    filters["Cause"] = (selectCause.value);
   }
-  // add age and cause
+  if(selectAge.value != "Age"){
+    filters["Age"] = (selectAge.value);
+  }
   addMarks();
 }
 
@@ -172,7 +176,7 @@ function clear(){
   }
   selectedHomicideContainer.style = "display:none";
   selectCity.selectedIndex = 0;
-  selectGender.selectedIndex = 0;
+  selectCause.selectedIndex = 0;
   filter();
 }
 
@@ -215,7 +219,8 @@ for (i = 0; i < acc.length; i++) {
 }
 
 selectCity.addEventListener("change", filter);
-selectGender.addEventListener("change", filter);
+selectCause.addEventListener("change", filter);
+selectAge.addEventListener("change", filter);
 window.addEventListener("load", addAllMarks);
 clearFiltersButton.addEventListener("click", clear);
 clearSelection.addEventListener("click", clear);
