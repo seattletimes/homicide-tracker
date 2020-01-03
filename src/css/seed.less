@@ -65,9 +65,17 @@ body{
   background-color: white;
   border: 1px solid rgb(169, 169, 169);
   width: 100px;
+  @media screen and (max-width: 720px){
+    width: 150px;
+  }
 }
 .legend{
   font-size: 16px ;
+  @media screen and (max-width: 720px){
+    p{
+      margin: 2px 0 0 0;
+    }
+  }
 }
 .dot{
   height: 20px;
@@ -76,13 +84,13 @@ body{
   display: inline-block;
   opacity: .7;
   &.police{
-    background-color: blue;
+    background-color: darkorange;
   }
   &.new{
-    background-color: green;
+    background-color: lime;
   }
   &.other{
-    background-color: black;
+    background-color: darkolivegreen;
   }
 }
 }
@@ -176,8 +184,12 @@ leaflet-map {
   margin: auto;
 }
 
+.accordion:nth-child(4n + 1){
+background-color: rgb(238, 238, 238);
+}
+
 .accordion {
-    background-color: #eee;
+    background-color: rgb(248, 248, 248);
     color: #444;
     cursor: pointer;
     padding: 5px 0;
@@ -196,6 +208,9 @@ leaflet-map {
         div{
             margin:  auto;
             width: 25%;
+        }
+        a{
+          color: #0777b3;
         }
     }
   }

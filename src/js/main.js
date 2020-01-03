@@ -187,7 +187,7 @@ function makeDataRow(element){
   var rowHTML = "<button class='accordion'> <div class='row-title'> <div class='row-date'>" + element.date + "</div> <div>" 
                 + element.victim_name + ", " + element.victim_age + "</div> "
                 + "<div>" + element.city + "</div>"
-                + "<div>" + element.url_date + "</div> </div></button>" 
+                + "<div><a href='" + element.url + "' target='_blank' rel='noopener noreferrer'>" + element.url_date + "</a></div> </div></button>" 
                 + "<div class='panel'> <p>" + element.description + "</p> </div>";
   return rowHTML;
 }
