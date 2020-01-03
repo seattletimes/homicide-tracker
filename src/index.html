@@ -16,8 +16,8 @@
      <%= t.include("partials/_nav.html") %>
      <div class="head-content">
        <h1 class="title">Homicide Tracker Map</h1>
-       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus at varius odio. Mauris pulvinar justo eget mauris imperdiet, id vestibulum diam posuere. Sed aliquam, justo vel tempor laoreet, metus felis interdum dolor, eu sollicitudin ex eros in orci. Duis lobortis rhoncus justo, porttitor gravida ex tincidunt vitae. Ut ac nisi tempus, pretium leo eu, feugiat orci. Quisque posuere lorem nec dui convallis, commodo commodo nisi dignissim. Nullam nisi ipsum, gravida sit amet tincidunt id, elementum vitae quam.</p>
-       <p class="directions">Select from the drop down menus to filter the map</p>
+       <p>Every year in King County, dozens of people lose their lives to acts of violence. The Seattle Times is tracking the county’s homicides in 2020, in an effort to recognize the loss and to monitor the cases as they are investigated and move through the criminal justice system. In the map and table below, you can find information about each homicide reported in King County so far this year.</p>
+       <p class="directions">Click on the case to see more details about what happened, as well as links to The Seattle Times’ coverage.</p>
       </div>
 
       <div class="filter-map-container">
@@ -54,9 +54,9 @@
         <button class="clear-filters">Clear</button>
       </div>
       <div class="legend">
-        <p><span class="dot new"></span> Latest homicides</p>
-        <p><span class="dot police"></span> Police shooting</p>
-        <p><span class="dot other"></span> All other homicides</p>
+        <p><span class="dot new"></span> Recent homicides</p>
+        <p><span class="dot police"></span> Police suspected/ confirmed homicide</p>
+        <p><span class="dot other"></span> Homicide</p>
       </div>
     </div>
 
@@ -64,25 +64,28 @@
   </div>
  
   <div class="data-table-container">
-    <div style="display:inline-block">
-      <div class="selected-homicide-container">
-        <div class="selected-homicide">
-        </div>
-          <button class='clear-search'><img class="icon" src='assets/x-icon.svg'></button>
-      </div>
-    </div>
+
   
     <div class="data-table-header">
-        <div>Date</div> 
-        <div>Time</div> 
-        <div>Location</div> 
-        <div>Victim</div>
+        <div>DATE</div>
+        <div>VICTIM</div> 
+        <div>LOCATION</div> 
+        <div>LATEST STORY</div>
     </div>
   <div class="data-table"> 
   </div>
   <div class="more-rows">Click to see more</div>
 
 </div>
+<div class="credits">
+  <div>Reporting and research by Sara Jean Green and Diana Samuels</div>
+  <div >Design and development by Miranda Hardy</div>
+  <div>Production by Jeff Albertson</div>
+</div>
+
+
+<%= t.include("partials/_marketing.html", {type: "subscribe", placement: "footer"}) %>
+<%= t.include("partials/_dontMiss.html", grunt.data.json) %>
 <%= t.include("partials/_navBottom.html") %>
 
     </responsive-child>

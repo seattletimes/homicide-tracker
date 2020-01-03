@@ -31,6 +31,7 @@ body{
     padding: 3px;
     font-family: @df-sans;
     font-size: 16px;
+    border-radius: 5px;
     background-color: white;
   }
   @media screen and (max-width: 720px){
@@ -58,6 +59,7 @@ body{
 .clear-filters{
   padding: 3px;
   outline: none;
+  border-radius: 5px;
   font-family: @df-sans;
   font-size: 16px;
   background-color: white;
@@ -139,6 +141,9 @@ leaflet-map {
   background-color: #eee;
   flex-wrap: wrap;
   display: none;
+  margin: 20px 0;
+  padding: 4px 4px;
+  border-radius: 5px;
   .selected-homicide-text{
     margin: 0;
     padding: 3px;
@@ -159,6 +164,7 @@ leaflet-map {
 .data-table-header{
     display: flex;
     margin-bottom: 10px;
+    font-size: 16px;
     div{
       width: 25%;
         margin: auto;
@@ -184,6 +190,9 @@ leaflet-map {
     transition: 0.4s;
     .row-title{
         display: flex;
+        .row-date{
+          font-weight: bold;
+        }
         div{
             margin:  auto;
             width: 25%;
@@ -218,6 +227,21 @@ leaflet-map {
       cursor: pointer;
     }
   }
+
+  .credits {
+    margin: 40px auto;
+    font-family: "ff-dagny-web-pro", Helvetica Neue, Helvetica, sans-serif;
+    font-weight: bold;
+    font-style: italic;
+    font-size: 1em;
+    max-width: 960px;
+    
+        font-style: normal;
+        font-size: 0.8em;
+    
+
+  }
+
 
 @import "leaflet-tweaks";
 @import "legend";

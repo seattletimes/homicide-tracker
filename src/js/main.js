@@ -64,7 +64,7 @@ function addAllMarks(){
       fillColor: getColor(pointData[x]),
       fillOpacity: .4,
       index: x,
-      weight: 1,
+      weight: 1.5,
       color: getColor(pointData[x])
       }).on("click", markerClick);
     markers.push(marker);
@@ -98,7 +98,7 @@ function addMarks(){
             fillColor: getColor(pointData[x]),
             fillOpacity: .4,
             index: x,
-            weight: 1,
+            weight: 1.5,
             color: getColor(pointData[x])
             }).on("click", markerClick);          
           markers.push(marker);
@@ -184,11 +184,11 @@ map.scrollWheelZoom.disable();
 
 //Create data table
 function makeDataRow(element){
-  var rowHTML = "<button class='accordion'> <div class='row-title'> <div>" + element.date + "</div> <div>" +
-                 + element.time + "</div> <div>"
-                 + element.city + "</div> <div>"
-                 + element.victim_name + ", " + element.victim_age + "</div> </div> </button>"
-                 + "<div class='panel'> <p>" + element.description + "</p> </div>";
+  var rowHTML = "<button class='accordion'> <div class='row-title'> <div class='row-date'>" + element.date + "</div> <div>" 
+                + element.victim_name + ", " + element.victim_age + "</div> "
+                + "<div>" + element.city + "</div>"
+                + "<div>" + element.url_date + "</div> </div></button>" 
+                + "<div class='panel'> <p>" + element.description + "</p> </div>";
   return rowHTML;
 }
 
