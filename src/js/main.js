@@ -16,6 +16,7 @@ var clearSelection = document.querySelector(".clear-search");
 var clickToSee = document.querySelector(".more-rows");
 var selectedHomicide = document.querySelector(".selected-homicide");
 var selectedHomicideContainer = document.querySelector(".selected-homicide-container");
+var moreRows = document.querySelector(".more-rows");
 
 //global vars
 var L = mapElement.leaflet;
@@ -25,8 +26,6 @@ var markers = [];
 var markergroup = L.featureGroup();
 var marker;
 var filters;
-
-
 
 //make lists to include in drop downs, and sort data for display
 for(var x = 0; x<pointData.length; x++){
@@ -56,7 +55,10 @@ selectCity.innerHTML = makeCity("City", cities);
 
 map.scrollWheelZoom.disable();
 
+var dataTableGroup;
+
 function addAllMarks(){
+  dataTableGroup = [];
   markergroup.clearLayers();
   markers = [];
   for(var x = 0; x<pointData.length; x++){
@@ -69,15 +71,17 @@ function addAllMarks(){
       }).on("click", markerClick);
     markers.push(marker);
     marker.addTo(markergroup);
+    dataTableGroup.push(x);
   }
   markergroup.addTo(map);
 }
 
 function addMarks(){
+  dataTableGroup = [];
   markergroup.clearLayers();
   markers = [];
 
-  if(filters.Cause == "" && filters.City == "" && filters.Age){
+  if(filters.Cause == "" && filters.City == "" && filters.Age == ""){
     addAllMarks();
   }
   else{
@@ -93,6 +97,19 @@ function addMarks(){
             mark = false;
           }
         }
+        if(filters.Age != "" && mark != false){
+          console.log("Hi");
+          if((filters.Age).length > 1){
+            if(pointData[x].victim_age < filters.Age[0] || pointData[x].victim_age > filters.Age[1]){
+              mark = false;
+            }
+          }
+          else{
+            if(pointData[x].victim_age < filters.Age[0]){
+              mark = false;
+            }
+          }
+        }
         if(mark){
           marker = L.circleMarker([pointData[x].lat, pointData[x].lng], {
             fillColor: getColor(pointData[x]),
@@ -103,6 +120,7 @@ function addMarks(){
             }).on("click", markerClick);          
           markers.push(marker);
           marker.addTo(markergroup);
+          dataTableGroup.push(x);
         }
       }
     markergroup.addTo(map);
@@ -131,7 +149,10 @@ function filter(){
     filters["Cause"] = (selectCause.value);
   }
   if(selectAge.value != "Age"){
-    filters["Age"] = (selectAge.value);
+    var age = (selectAge.value);
+    age = age.split(",");
+    for(var x = 0; x<age.length; x++){age[x] = parseInt(age[x])};
+    filters["Age"] = age;
   }
   addMarks();
 }
@@ -161,22 +182,13 @@ function markerClick(){
 
 function clear(){
   clickToSee.style.display = "block";
-  dataTable.innerHTML = makeDataTable();
-  var i;
-  for (i = 0; i < acc.length; i++) {
-    acc[i].addEventListener("click", function() {
-      this.classList.toggle("active");
-      var panel = this.nextElementSibling;
-      if (panel.style.maxHeight) {
-        panel.style.maxHeight = null;
-      } else {
-        panel.style.maxHeight = panel.scrollHeight + "px";
-      }
-    });
-  }
+  dataTable.innerHTML = makeDataTable(currentRows);
+  if(currentRows >= pointData.length){moreRows.style.display = "none";}
+makeAccordion();
   selectedHomicideContainer.style = "display:none";
   selectCity.selectedIndex = 0;
   selectCause.selectedIndex = 0;
+  selectAge.selectedIndex = 0;
   filter();
 }
 
@@ -192,32 +204,62 @@ function makeDataRow(element){
   return rowHTML;
 }
 
-function makeDataTable(){
+function makeDataTable(rows){
   var dataTableHTML = "";
-  for(var x = 0; x < pointData.length; x++){
+  for(var x = 0; x < rows; x++){
     dataTableHTML += makeDataRow(pointData[x]);
   }
   return dataTableHTML;
 }
 
 var dataTable = document.querySelector(".data-table");
-dataTable.innerHTML = makeDataTable();
+var currentRows;
+if(pointData.length <15){
+  currentRows = pointData.length;
+  moreRows.style.display = "none";
+}
+else{
+  currentRows = 15;
+}
+dataTable.innerHTML = makeDataTable(currentRows);
+makeAccordion();
 
-var acc = document.getElementsByClassName("accordion");
-var i;
-
-for (i = 0; i < acc.length; i++) {
-  acc[i].addEventListener("click", function() {
-    this.classList.toggle("active");
-    var panel = this.nextElementSibling;
-    if (panel.style.maxHeight) {
-      panel.style.maxHeight = null;
-    } else {
-      panel.style.maxHeight = panel.scrollHeight + "px";
-    }
-  });
+function makeAccordion(){
+  var acc = document.getElementsByClassName("accordion");
+  var i;
+  
+  for (i = 0; i < acc.length; i++) {
+    acc[i].addEventListener("click", function() {
+      this.classList.toggle("active");
+      var panel = this.nextElementSibling;
+      if (panel.style.maxHeight) {
+        panel.style.maxHeight = null;
+      } else {
+        panel.style.maxHeight = panel.scrollHeight + "px";
+      }
+    });
+  }
 }
 
+
+
+moreRows.addEventListener("click", function(){
+  if(currentRows < pointData.length){
+    if((pointData.length - currentRows) < 15){
+      currentRows = pointData.length;
+    }else{
+      currentRows += 15;
+    }
+    dataTable.innerHTML = makeDataTable(currentRows);
+    if(currentRows == pointData.length){
+      moreRows.style.display = "none";
+    }
+  }
+  else{
+    moreRows.style.display = "none";
+  }
+makeAccordion();
+});
 selectCity.addEventListener("change", filter);
 selectCause.addEventListener("change", filter);
 selectAge.addEventListener("change", filter);

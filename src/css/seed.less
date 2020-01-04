@@ -17,6 +17,8 @@ body{
   }
   .directions{
     margin: 0 0 8px 0;
+    font-style: italic;
+    color: @df-middle-gray;
   }
 }
 
@@ -65,6 +67,7 @@ body{
   background-color: white;
   border: 1px solid rgb(169, 169, 169);
   width: 100px;
+  text-align: left;
   @media screen and (max-width: 720px){
     width: 150px;
   }
@@ -185,11 +188,11 @@ leaflet-map {
 }
 
 .accordion:nth-child(4n + 1){
-background-color: rgb(238, 238, 238);
+background-color: #eeeeee;
 }
 
 .accordion {
-    background-color: rgb(248, 248, 248);
+    background-color: #f8f8f8;
     color: #444;
     cursor: pointer;
     padding: 5px 0;
@@ -202,6 +205,7 @@ background-color: rgb(238, 238, 238);
     transition: 0.4s;
     .row-title{
         display: flex;
+        padding: 0 4px;
         .row-date{
           font-weight: bold;
         }
@@ -211,6 +215,9 @@ background-color: rgb(238, 238, 238);
         }
         a{
           color: #0777b3;
+          &:hover{
+            text-decoration: underline;
+          }
         }
     }
   }
@@ -234,11 +241,12 @@ background-color: rgb(238, 238, 238);
     height: 25px;
     line-height: 1.25;
     margin: 20px auto;
-    background-color: #eee;
+    background-color: #f8f8f8;
     text-align: center;
     border: 1px solid black;
+    border-radius: 5px;
     &:hover{
-      background-color: #ccc;
+      background-color: #eee;
       cursor: pointer;
     }
   }

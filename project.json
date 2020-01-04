@@ -2,16 +2,16 @@
   "s3": {
     "stage": {
       "bucket": "projects-staging.seattletimes.com",
-      "path": ""
+      "path": "gradual-barnacle"
     },
     "live": {
       "bucket": "projects.seattletimes.com",
       "path": ""
     }
   },
-  "title": "",
+  "title": "Homicide Tracker",
   "description": "",
-  "author": "",
+  "author": "Miranda Hardy",
   "url": "",
   "post_id": 0,
   "image": "assets/social.jpg",
