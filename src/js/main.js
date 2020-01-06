@@ -62,13 +62,7 @@ function addAllMarks(){
   markergroup.clearLayers();
   markers = [];
   for(var x = 0; x<pointData.length; x++){
-    marker = L.circleMarker([pointData[x].lat, pointData[x].lng], {
-      fillColor: getColor(pointData[x]),
-      fillOpacity: .4,
-      index: x,
-      weight: 1.5,
-      color: getColor(pointData[x])
-      }).on("click", markerClick);
+    marker = makeMark(pointData[x]);
     markers.push(marker);
     marker.addTo(markergroup);
     dataTableGroup.push(x);
@@ -111,13 +105,7 @@ function addMarks(){
           }
         }
         if(mark){
-          marker = L.circleMarker([pointData[x].lat, pointData[x].lng], {
-            fillColor: getColor(pointData[x]),
-            fillOpacity: .4,
-            index: x,
-            weight: 1.5,
-            color: getColor(pointData[x])
-            }).on("click", markerClick);          
+          marker = makeMark(pointData[x]);         
           markers.push(marker);
           marker.addTo(markergroup);
           dataTableGroup.push(x);
@@ -127,19 +115,28 @@ function addMarks(){
   }
 }
 
+function makeMark(data, x){
+  return L.circleMarker([data.lat, data.lng], {
+    fillColor: getColor(data),
+    fillOpacity: .4,
+    index: x,
+    weight: 1.5,
+    color: getColor(data)
+    }).on("click", markerClick); 
+}
+
 function getColor(element){
   if(element.new && element.new == "x"){
-    return "lime";
+    return "#94F28C";
   }
   else if (element.police_shooting && element.police_shooting != ""){
     return  "darkorange";
   }
   else{
-    return "darkolivegreen";
+    return " #1D6D39";
   }
 }
 
-//define list of filters to be used and apply to markers
 function filter(){
   filters = {"City": "", "Cause": "", "Age": ""};
   if(selectCity.value != "City"){
@@ -168,7 +165,7 @@ function markerClick(){
       markers[x].setStyle({fillOpacity: .4});
     }
   }
-  activeText = "<p class='selected-homicide-text'>" + pointData[this.options.index].date + " | " 
+  activeText = "<p class='selected-homicide-text'>" + pointData[this.options.index].date + " - " 
               + pointData[this.options.index].victim_name + " </p>";
   selectedHomicide.innerHTML = activeText;
   selectedHomicideContainer.style = "display:flex";
@@ -184,7 +181,7 @@ function clear(){
   clickToSee.style.display = "block";
   dataTable.innerHTML = makeDataTable(currentRows);
   if(currentRows >= pointData.length){moreRows.style.display = "none";}
-makeAccordion();
+  makeAccordion();
   selectedHomicideContainer.style = "display:none";
   selectCity.selectedIndex = 0;
   selectCause.selectedIndex = 0;
@@ -241,8 +238,6 @@ function makeAccordion(){
   }
 }
 
-
-
 moreRows.addEventListener("click", function(){
   if(currentRows < pointData.length){
     if((pointData.length - currentRows) < 15){
@@ -258,7 +253,7 @@ moreRows.addEventListener("click", function(){
   else{
     moreRows.style.display = "none";
   }
-makeAccordion();
+  makeAccordion();
 });
 selectCity.addEventListener("change", filter);
 selectCause.addEventListener("change", filter);

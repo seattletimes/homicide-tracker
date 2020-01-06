@@ -3,17 +3,16 @@
 
 @aspect-ratio: 9/10;
 @legend-length: 5; //number of legend items
-body{
-  font-family: @df-sans;
-}
 
 .head-content{
   max-width: 630px;
   margin: auto;
+  @df-serif: "ff-meta-serif-web-pro", Georgia, serif;
+  font-size: 19px;
   .title{
       text-align: center;
       font-weight: bold;
-      font-size: 2.5em;
+      font-size: 28px;
   }
   .directions{
     margin: 0 0 8px 0;
@@ -29,6 +28,12 @@ body{
 }
 
 .filter-container{
+  font-family: @df-sans;
+
+  .filter-by{
+    font-size: 19px;
+    margin: 0 0 6px 0;
+  }
   select{
     padding: 3px;
     font-family: @df-sans;
@@ -65,7 +70,7 @@ body{
   font-family: @df-sans;
   font-size: 16px;
   background-color: white;
-  border: 1px solid rgb(169, 169, 169);
+  border: 1px solid black;
   width: 100px;
   text-align: left;
   @media screen and (max-width: 720px){
@@ -90,10 +95,10 @@ body{
     background-color: darkorange;
   }
   &.new{
-    background-color: lime;
+    background-color: #94F28C;
   }
   &.other{
-    background-color: darkolivegreen;
+    background-color: #1D6D39;
   }
 }
 }
@@ -108,14 +113,14 @@ select:hover{
 }
 
 .map-content {
-  max-width: 600px;
+  max-width: 850px;
   width: 100%;
 }
 leaflet-map {
   font-family: @df-sans;
   padding: 0;
   margin: 0 auto;
-  max-width: 600px;
+  max-width: 850px;
   font-size: 16px;
   height: 100%;
 }
@@ -176,6 +181,8 @@ leaflet-map {
     display: flex;
     margin-bottom: 10px;
     font-size: 16px;
+    font-family: @df-sans;
+    font-weight: bold;
     div{
       width: 25%;
         margin: auto;
@@ -234,6 +241,7 @@ background-color: #eeeeee;
     margin: auto;
     overflow: hidden;
     transition: max-height 0.2s ease-out;
+    font-size: 16px;
   }
 
   .more-rows{
