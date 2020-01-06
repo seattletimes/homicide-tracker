@@ -62,7 +62,7 @@ function addAllMarks(){
   markergroup.clearLayers();
   markers = [];
   for(var x = 0; x<pointData.length; x++){
-    marker = makeMark(pointData[x]);
+    marker = makeMark(pointData[x], x);
     markers.push(marker);
     marker.addTo(markergroup);
     dataTableGroup.push(x);
@@ -105,7 +105,7 @@ function addMarks(){
           }
         }
         if(mark){
-          marker = makeMark(pointData[x]);         
+          marker = makeMark(pointData[x], x);         
           markers.push(marker);
           marker.addTo(markergroup);
           dataTableGroup.push(x);
@@ -193,12 +193,47 @@ map.scrollWheelZoom.disable();
 
 //Create data table
 function makeDataRow(element){
-  var rowHTML = "<button class='accordion'> <div class='row-title'> <div class='row-date'>" + element.date + "</div> <div>" 
-                + element.victim_name + ", " + element.victim_age + "</div> "
-                + "<div>" + element.city + "</div>"
-                + "<div><a href='" + element.url + "' target='_blank' rel='noopener noreferrer'>" + element.url_date + "</a></div> </div></button>" 
-                + "<div class='panel'> <p>" + element.description + "</p> </div>";
+  var rowHTML = "<button class='accordion'> <div class='row-title'> <div class='row-date'>" + element.date + "</div> <div class='row-name'>" 
+                + element.victim_name + ", " + element.victim_age ;
+  if(element.victim2_name){
+    rowHTML += " <br>" + element.victim2_name + ", " + element.victim2_age + "</div> ";
+  } else{
+    rowHTML += "</div> "
+  }
+  rowHTML += "<div class='row-city'>" + element.city + "</div>"
+            + "<div class='row-latest'><a href='" + element.url + "' class='data-table-link' target='_blank' rel='noopener noreferrer'>" + element.url_date + "</a></div> </div></button>";
+
+  var panel = "<div class='panel'> <p>" + element.description + "</p>";
+  panel += "<p>Cause of death: " + element.cause_death_description + "</p>";
+  if(element.suspect_name){
+    panel += "<p>Suspect: " + element.suspect_name;
+    if(element.convicted){
+      panel += ", <span class='convicted'>convicted</span>";
+    }
+    else{
+      panel += ", not convicted";
+    }
+    panel += "</p>";
+  }
+  if(element.updates){
+    panel += "<p>Updates: " + element.updates + "</p>";
+  }
+  
+  var urlText = "";
+  if(element.url && element.url_date != ""){ urlText += makeURL(element.url, element.url_date)  }
+  if(element.url2 && element.url2_date != ""){ urlText += ", " + makeURL(element.url2, element.url2_date)  }
+  if(element.url3 && element.url3_date != ""){ urlText += ", " + makeURL(element.url3, element.url3_date)  }
+  if(element.url4 && element.url4_date != "" ){ urlText += ", " + makeURL(element.url4, element.url4_date)  }
+
+  if(urlText != ""){panel += "<p> Read More: " + urlText + "</p>"}
+  
+  panel += "</div>";
+  rowHTML += panel;
   return rowHTML;
+}
+
+function makeURL(url, urldate ){
+  return "<a href='" + url + "' class='data-table-link' target='_blank' rel='noopener noreferrer'>" + urldate + "</a>"
 }
 
 function makeDataTable(rows){

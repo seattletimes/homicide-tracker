@@ -29,8 +29,8 @@
 
 .filter-container{
   font-family: @df-sans;
-
   .filter-by{
+    width: 100%;
     font-size: 19px;
     margin: 0 0 6px 0;
   }
@@ -41,7 +41,7 @@
     border-radius: 5px;
     background-color: white;
   }
-  @media screen and (max-width: 720px){
+  @media screen and (max-width: 960px){
     margin-left: 0; 
     width: 100%;
     flex-wrap: wrap;
@@ -54,12 +54,12 @@
     }
   }
 
-  @media screen and (min-width: 720px){
-  width: 110px;
+  @media screen and (min-width: 960px){
+  width: 160px;
   div {
     padding-bottom: 10px;
       select{
-          width: 100px;
+          width: 150px;
       }        
   }
 }
@@ -71,17 +71,20 @@
   font-size: 16px;
   background-color: white;
   border: 1px solid black;
-  width: 100px;
   text-align: left;
-  @media screen and (max-width: 720px){
-    width: 150px;
-  }
+  width: 150px;
 }
 .legend{
+  display: flex;
+  flex-wrap: wrap;
   font-size: 16px ;
-  @media screen and (max-width: 720px){
+  width: 100%;
+  p{
+    margin: 2px 0;
+  }
+  @media screen and (max-width: 960px){
     p{
-      margin: 2px 0 0 0;
+      margin: 4px 0;
     }
   }
 }
@@ -113,14 +116,14 @@ select:hover{
 }
 
 .map-content {
-  max-width: 850px;
+  max-width: 800px;
   width: 100%;
 }
 leaflet-map {
   font-family: @df-sans;
   padding: 0;
   margin: 0 auto;
-  max-width: 850px;
+  max-width: 800px;
   font-size: 16px;
   height: 100%;
 }
@@ -183,9 +186,35 @@ leaflet-map {
     font-size: 16px;
     font-family: @df-sans;
     font-weight: bold;
-    div{
+    line-height: 1;
+    .data-head-date{
+      width: 10%;
+      min-width: 42px;
+      margin: auto 2px;
+    }
+    .data-head-name{
+      width: 40%;
+      min-width: 120px;
+      margin: auto 2px;
+      @media screen and (max-width: 320px){
+        width: 60%;
+      }
+    }
+    .data-head-city{
       width: 25%;
-        margin: auto;
+      min-width: 80px;
+      margin: auto 2px;
+      @media screen and (max-width: 320px){
+        width: 30%;
+      }
+    }
+    .data-head-latest{
+      width: 15%;
+      max-width: 60px;
+      margin: auto 2px;
+      @media screen and (max-width: 320px){
+        display: none;
+      }
     }
 }
 
@@ -205,27 +234,61 @@ background-color: #eeeeee;
     padding: 5px 0;
     width: 100%;
     border: none;
-    text-align: left;
+    // text-align: left;
     outline: none;
     font-size: 16px;
     font-family: @df-sans;
     transition: 0.4s;
     .row-title{
+      // text-align: left;
         display: flex;
         padding: 0 4px;
         .row-date{
           font-weight: bold;
+          width: 10%;
+          min-width: 42px;
+          margin: auto 2px;
         }
-        div{
-            margin:  auto;
-            width: 25%;
-        }
-        a{
-          color: #0777b3;
-          &:hover{
-            text-decoration: underline;
+        .row-latest{
+          width: 15%;
+          max-width: 60px;
+          margin: auto 2px;
+          @media screen and (max-width: 320px){
+            display: none;
           }
         }
+        .row-city{
+          text-align: left;
+          width: 25%;
+          min-width: 80px;
+          margin: auto 2px;
+          @media screen and (max-width: 320px){
+            width: 30%;
+          }
+        }
+        .row-name{
+          text-align: left;
+          width: 40%;
+          min-width: 120px;
+          @media screen and (max-width: 320px){
+            width: 60%;
+          }
+        }
+        div{
+            margin:  auto 2px;;
+            width: 25%;
+        }
+    }
+  }
+
+
+  .data-table-link{
+    color: #0777b3;
+    &:hover{
+      text-decoration: underline;
+    }
+    &:visited{
+      color: #0777b3;
     }
   }
   
@@ -242,6 +305,9 @@ background-color: #eeeeee;
     overflow: hidden;
     transition: max-height 0.2s ease-out;
     font-size: 16px;
+    .convicted{
+      font-weight: bold;
+    }
   }
 
   .more-rows{
