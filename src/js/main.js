@@ -168,12 +168,12 @@ function markerClick(){
   activeText = "<p class='selected-homicide-text'>" + pointData[this.options.index].date + " - " 
               + pointData[this.options.index].victim_name + " </p>";
   selectedHomicide.innerHTML = activeText;
-  selectedHomicideContainer.style = "display:flex";
+  selectedHomicideContainer.style.cssText = "display:flex";
   this.setStyle({fillOpacity: 1});
   var selectedRow = makeDataRow(pointData[this.options.index]);
   dataTable.innerHTML = selectedRow;
   var selectedPanel = document.querySelector(".panel");
-  selectedPanel.style = "max-height:" + (document.querySelector(".panel p").scrollHeight + 50) + "px";
+  selectedPanel.style.cssText = "max-height:" + (document.querySelector(".panel p").scrollHeight + 50) + "px";
   clickToSee.style.display = "none";
 }
 
@@ -182,7 +182,7 @@ function clear(){
   dataTable.innerHTML = makeDataTable(currentRows);
   if(currentRows >= pointData.length){moreRows.style.display = "none";}
   makeAccordion();
-  selectedHomicideContainer.style = "display:none";
+  selectedHomicideContainer.style.cssText = "display:none";
   selectCity.selectedIndex = 0;
   selectCause.selectedIndex = 0;
   selectAge.selectedIndex = 0;
