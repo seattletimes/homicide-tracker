@@ -40,6 +40,9 @@
     width: 100%;
     font-size: 19px;
     margin: 0 0 6px 0;
+    @media screen and (max-width: 630px){
+      margin: 0 0 6px 6px;
+    }
   }
   select{
     -moz-appearance: none;
@@ -185,6 +188,9 @@ leaflet-map {
   margin: 20px 0;
   padding: 4px 4px;
   border-radius: 5px;
+  @media screen and (max-width: 630px){
+    margin: 20px 6px;
+  }
   .selected-homicide-text{
     margin: 0;
     padding: 3px;
@@ -350,6 +356,7 @@ background-color: #eeeeee;
 
   .credits {
     margin: 40px auto;
+    padding: 0 6px;
     font-family: "ff-dagny-web-pro", Helvetica Neue, Helvetica, sans-serif;
     font-weight: bold;
     font-style: italic;
