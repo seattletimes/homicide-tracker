@@ -9,16 +9,23 @@
   margin: auto;
   @df-serif: "ff-meta-serif-web-pro", Georgia, serif;
   font-size: 19px;
+  @media screen and (max-width: 630px){
+    margin: 0 6px;
+  }
+  .chatter{
+    margin-bottom: 8px;
+  }
   .title{
       text-align: center;
       font-weight: bold;
-      font-size: 28px;
+      font-size: 28px;   
   }
-  .directions{
-    margin: 0 0 8px 0;
-    font-style: italic;
-    color: @df-middle-gray;
-  }
+}
+.directions{
+  margin: 0 0 10px 0;
+  font-style: italic;
+  color: @df-middle-gray;
+  text-align: center;
 }
 
 .filter-map-container{
@@ -52,7 +59,6 @@
     border-radius: 5px;
     background-color: white;
     border: 1px solid @df-middle-gray;
-
   }
 
   @media screen and (max-width: 960px){
@@ -61,8 +67,8 @@
     flex-wrap: wrap;
     display: flex;
     div{
-      margin: auto;
-      select{
+      margin: 4px auto;
+    select{
         width: 150px;
       }
     }
@@ -206,6 +212,7 @@ leaflet-map {
     .data-head-date{
       width: 10%;
       min-width: 42px;
+      text-align: center;
       margin: auto 2px;
     }
     .data-head-name{
@@ -348,7 +355,6 @@ background-color: #eeeeee;
     font-style: italic;
     font-size: 1em;
     max-width: 960px;
-    
         font-style: normal;
         font-size: 0.8em;
     

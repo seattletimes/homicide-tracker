@@ -204,19 +204,19 @@ function makeDataRow(element){
             + "<div class='row-latest'><a href='" + element.url + "' class='data-table-link' target='_blank' rel='noopener noreferrer'>" + element.url_date + "</a></div> </div></button>";
 
   var panel = "<div class='panel'> <p>" + element.description + "</p>";
-  panel += "<p>Cause of death: " + element.cause_death_description + "</p>";
+  panel += "<ul><li>Cause of death: " + element.cause_death_description + "</li>";
   if(element.suspect_name){
-    panel += "<p>Suspect: " + element.suspect_name;
+    panel += "<li>Suspect: " + element.suspect_name;
     if(element.convicted){
       panel += ", <span class='convicted'>convicted</span>";
     }
     else{
       panel += ", not convicted";
     }
-    panel += "</p>";
+    panel += "</li>";
   }
   if(element.updates){
-    panel += "<p>Updates: " + element.updates + "</p>";
+    panel += "<li>Update(s): " + element.updates + "</li>";
   }
   
   var urlText = "";
@@ -225,7 +225,7 @@ function makeDataRow(element){
   if(element.url3 && element.url3_date != ""){ urlText += ", " + makeURL(element.url3, element.url3_date)  }
   if(element.url4 && element.url4_date != "" ){ urlText += ", " + makeURL(element.url4, element.url4_date)  }
 
-  if(urlText != ""){panel += "<p> Read More: " + urlText + "</p>"}
+  if(urlText != ""){panel += "<li> Read more: " + urlText + "</li></ul>"}
   
   panel += "</div>";
   rowHTML += panel;
