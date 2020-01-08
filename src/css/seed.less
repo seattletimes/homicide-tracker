@@ -178,35 +178,56 @@ leaflet-map {
     }
   }
 }
-
-.selected-homicide-container{
-  border: 1px solid rgb(175, 175, 175);
-  font-size: 16px;
-  background-color: #eee;
+.map-container-bottom{
+  display: flex;
   flex-wrap: wrap;
-  display: none;
-  margin: 20px 0;
-  padding: 4px 4px;
-  border-radius: 5px;
-  @media screen and (max-width: 630px){
-    margin: 20px 6px;
+  height: 50px;
+  margin-bottom: 20px;
+
+  .timestamp-container{
+    height: 40px;
+    margin: 20px 0;
+    .timestamp{
+      font-size: 16px;
+      font-style: italic;
+      color: @df-middle-gray;
+      line-height: 0;
+    }
   }
-  .selected-homicide-text{
-    margin: 0;
-    padding: 3px;
+  .selected-homicide-container{
+    height: 40px;
   }
-    .clear-search{
+  .selected-homicide{
+    border: 1px solid rgb(175, 175, 175);
+    font-size: 16px;
+    background-color: #eee;
+    flex-wrap: wrap;
+    display: none;
+    margin: 20px 0;
+    padding: 4px 4px;
+    border-radius: 5px;
+    @media screen and (max-width: 630px){
+      margin: 20px 6px;
+    }
+    .selected-homicide-text{
+      margin: 0;
       padding: 3px;
-      background-color: transparent;
-      border: none;
-      .icon{
-        width: 16px;
-        &:hover{
-          cursor: pointer;
+    }
+      .clear-search{
+        padding: 3px;
+        background-color: transparent;
+        border: none;
+        .icon{
+          width: 16px;
+          &:hover{
+            cursor: pointer;
+          }
         }
       }
-    }
+  }
 }
+
+
 
 .data-table-header{
     display: flex;

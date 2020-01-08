@@ -16,7 +16,11 @@ var clearSelection = document.querySelector(".clear-search");
 var clickToSee = document.querySelector(".more-rows");
 var selectedHomicide = document.querySelector(".selected-homicide");
 var selectedHomicideContainer = document.querySelector(".selected-homicide-container");
+var selectedHomicideText = document.querySelector(".selected-homicide-text");
+
 var moreRows = document.querySelector(".more-rows");
+var dataTable = document.querySelector(".data-table");
+var timestamp = document.querySelector(".timestamp");
 
 //global vars
 var L = mapElement.leaflet;
@@ -26,6 +30,9 @@ var markers = [];
 var markergroup = L.featureGroup();
 var marker;
 var filters;
+var currentRows;
+var filteredData;
+
 
 //make lists to include in drop downs, and sort data for display
 for(var x = 0; x<pointData.length; x++){
@@ -53,25 +60,31 @@ function makeCity(label, list){
 }
 selectCity.innerHTML = makeCity("City", cities);
 
+//add timestamp on map
+if(pointData.length>0){
+  timestamp.innerHTML = "Updated: " + pointData[pointData.length-1].date_added;
+}
+
 map.scrollWheelZoom.disable();
 
-var dataTableGroup;
 
 function addAllMarks(){
-  dataTableGroup = [];
+  filteredData = [];
   markergroup.clearLayers();
   markers = [];
   for(var x = 0; x<pointData.length; x++){
     marker = makeMark(pointData[x], x);
     markers.push(marker);
     marker.addTo(markergroup);
-    dataTableGroup.push(x);
+    filteredData.push(pointData[x]);
   }
   markergroup.addTo(map);
+  rowNum(filteredData);
+  makeDataTable(filteredData);
 }
 
 function addMarks(){
-  dataTableGroup = [];
+  filteredData = [];
   markergroup.clearLayers();
   markers = [];
 
@@ -92,7 +105,6 @@ function addMarks(){
           }
         }
         if(filters.Age != "" && mark != false){
-          console.log("Hi");
           if((filters.Age).length > 1){
             if(pointData[x].victim_age < filters.Age[0] || pointData[x].victim_age > filters.Age[1]){
               mark = false;
@@ -108,10 +120,12 @@ function addMarks(){
           marker = makeMark(pointData[x], x);         
           markers.push(marker);
           marker.addTo(markergroup);
-          dataTableGroup.push(x);
+          filteredData.push(pointData[x]);
         }
       }
     markergroup.addTo(map);
+    rowNum(filteredData);
+    makeDataTable(filteredData);
   }
 }
 
@@ -155,7 +169,6 @@ function filter(){
 }
 
 function markerClick(){
-  console.log(markers);
   var activeText;
   for(var x = 0; x < markers.length; x++){
     if (markers[x] == this){
@@ -165,10 +178,9 @@ function markerClick(){
       markers[x].setStyle({fillOpacity: .4});
     }
   }
-  activeText = "<p class='selected-homicide-text'>" + pointData[this.options.index].date + " - " 
-              + pointData[this.options.index].victim_name + " </p>";
-  selectedHomicide.innerHTML = activeText;
-  selectedHomicideContainer.style.cssText = "display:flex";
+  activeText =  pointData[this.options.index].date + " - " + pointData[this.options.index].victim_name;
+  selectedHomicideText.innerHTML = activeText;
+  selectedHomicide.style.cssText = "display:flex";
   this.setStyle({fillOpacity: 1});
   var selectedRow = makeDataRow(pointData[this.options.index]);
   dataTable.innerHTML = selectedRow;
@@ -179,10 +191,11 @@ function markerClick(){
 
 function clear(){
   clickToSee.style.display = "block";
-  dataTable.innerHTML = makeDataTable(currentRows);
+  rowNum(pointData);
+  dataTable.innerHTML = makeDataTable(pointData);
   if(currentRows >= pointData.length){moreRows.style.display = "none";}
   makeAccordion();
-  selectedHomicideContainer.style.cssText = "display:none";
+  selectedHomicide.style.cssText = "display:none";
   selectCity.selectedIndex = 0;
   selectCause.selectedIndex = 0;
   selectAge.selectedIndex = 0;
@@ -236,25 +249,24 @@ function makeURL(url, urldate ){
   return "<a href='" + url + "' class='data-table-link' target='_blank' rel='noopener noreferrer'>" + urldate + "</a>"
 }
 
-function makeDataTable(rows){
-  var dataTableHTML = "";
-  for(var x = 0; x < rows; x++){
-    dataTableHTML += makeDataRow(pointData[x]);
+function rowNum(data){
+  if(data.length < 15){
+    currentRows = data.length;
+    moreRows.style.display = "none";
   }
-  return dataTableHTML;
+  else{
+    currentRows = 15;
+  }
 }
 
-var dataTable = document.querySelector(".data-table");
-var currentRows;
-if(pointData.length <15){
-  currentRows = pointData.length;
-  moreRows.style.display = "none";
+function makeDataTable(data){
+  var dataTableHTML = "";
+  for(var x = 0; x < currentRows; x++){
+    dataTableHTML += makeDataRow(data[x]);
+  }
+  dataTable.innerHTML = dataTableHTML;
+  return dataTableHTML;
 }
-else{
-  currentRows = 15;
-}
-dataTable.innerHTML = makeDataTable(currentRows);
-makeAccordion();
 
 function makeAccordion(){
   var acc = document.getElementsByClassName("accordion");
@@ -274,14 +286,14 @@ function makeAccordion(){
 }
 
 moreRows.addEventListener("click", function(){
-  if(currentRows < pointData.length){
-    if((pointData.length - currentRows) < 15){
-      currentRows = pointData.length;
+  if(currentRows < filteredData.length){
+    if((filteredData.length - currentRows) <= 15){
+      currentRows = filteredData.length;
     }else{
       currentRows += 15;
     }
-    dataTable.innerHTML = makeDataTable(currentRows);
-    if(currentRows == pointData.length){
+    makeDataTable(filteredData);
+    if(currentRows == filteredData.length){
       moreRows.style.display = "none";
     }
   }
@@ -293,7 +305,9 @@ moreRows.addEventListener("click", function(){
 selectCity.addEventListener("change", filter);
 selectCause.addEventListener("change", filter);
 selectAge.addEventListener("change", filter);
-window.addEventListener("load", addAllMarks);
 clearFiltersButton.addEventListener("click", clear);
 clearSelection.addEventListener("click", clear);
 
+window.addEventListener("load", function(){
+  addAllMarks();
+})
