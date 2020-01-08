@@ -178,47 +178,44 @@ leaflet-map {
     }
   }
 }
-.map-container-bottom{
-  display: flex;
-  flex-wrap: wrap;
-  height: 50px;
-  margin-bottom: 20px;
-
-  .timestamp-container{
-    height: 40px;
-    margin: 20px 0;
-    .timestamp{
-      font-size: 16px;
-      font-style: italic;
-      color: @df-middle-gray;
-      line-height: 0;
-    }
+.timestamp-container{
+  width: 100%;
+  text-align: right;
+  .timestamp{
+    margin: 10px 6px 0 0;
+    font-size: 16px;
+    font-style: italic;
+    color: @df-middle-gray;
   }
+}
+
+.map-container-bottom{
+  margin-bottom: 4px;;
   .selected-homicide-container{
-    height: 40px;
+    min-height: 40px;
+    max-width: 100%;
   }
   .selected-homicide{
     border: 1px solid rgb(175, 175, 175);
     font-size: 16px;
     background-color: #eee;
-    flex-wrap: wrap;
     display: none;
-    margin: 20px 0;
+    margin: 2px 0 0 6px;
     padding: 4px 4px;
     border-radius: 5px;
-    @media screen and (max-width: 630px){
-      margin: 20px 6px;
-    }
     .selected-homicide-text{
+      float: right;
       margin: 0;
       padding: 3px;
     }
       .clear-search{
+        float: left;
         padding: 3px;
         background-color: transparent;
         border: none;
         .icon{
           width: 16px;
+          margin-top: 4px;
           &:hover{
             cursor: pointer;
           }
@@ -226,8 +223,6 @@ leaflet-map {
       }
   }
 }
-
-
 
 .data-table-header{
     display: flex;

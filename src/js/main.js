@@ -62,7 +62,7 @@ selectCity.innerHTML = makeCity("City", cities);
 
 //add timestamp on map
 if(pointData.length>0){
-  timestamp.innerHTML = "Updated: " + pointData[pointData.length-1].date_added;
+  timestamp.innerHTML = "Updated " + pointData[pointData.length-1].date_added;
 }
 
 map.scrollWheelZoom.disable();
@@ -81,6 +81,7 @@ function addAllMarks(){
   markergroup.addTo(map);
   rowNum(filteredData);
   makeDataTable(filteredData);
+  makeAccordion();
 }
 
 function addMarks(){
@@ -126,6 +127,7 @@ function addMarks(){
     markergroup.addTo(map);
     rowNum(filteredData);
     makeDataTable(filteredData);
+    makeAccordion();
   }
 }
 
@@ -180,7 +182,7 @@ function markerClick(){
   }
   activeText =  pointData[this.options.index].date + " - " + pointData[this.options.index].victim_name;
   selectedHomicideText.innerHTML = activeText;
-  selectedHomicide.style.cssText = "display:flex";
+  selectedHomicide.style.cssText = "display:inline-block";
   this.setStyle({fillOpacity: 1});
   var selectedRow = makeDataRow(pointData[this.options.index]);
   dataTable.innerHTML = selectedRow;
@@ -265,6 +267,9 @@ function makeDataTable(data){
     dataTableHTML += makeDataRow(data[x]);
   }
   dataTable.innerHTML = dataTableHTML;
+  if(dataTableHTML == ""){
+    dataTable.innerHTML = "<button class='accordion'> <div class='row-title'> No results, select different filters or clear all selected </div> <div class='row-name'></button>" ;
+I  }
   return dataTableHTML;
 }
 
