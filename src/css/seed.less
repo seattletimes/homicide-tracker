@@ -7,7 +7,7 @@
 .head-content{
   max-width: 630px;
   margin: auto;
-  @df-serif: "ff-meta-serif-web-pro", Georgia, serif;
+  font-style: @df-serif;
   font-size: 19px;
   @media screen and (max-width: 630px){
     margin: 0 6px;
@@ -22,7 +22,7 @@
   }
 }
 .directions{
-  margin: 0 0 10px 0;
+  margin: 0 0 30px 0;
   font-style: italic;
   color: @df-middle-gray;
   text-align: center;
@@ -350,6 +350,7 @@ background-color: #eeeeee;
     overflow: hidden;
     transition: max-height 0.2s ease-out;
     font-size: 16px;
+    font-family: @df-sans;
     .convicted{
       font-weight: bold;
     }
