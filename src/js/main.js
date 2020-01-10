@@ -62,7 +62,7 @@ selectCity.innerHTML = makeCity("City", cities);
 
 //add timestamp on map
 if(pointData.length>0){
-  timestamp.innerHTML = "Updated " + pointData[pointData.length-1].date_added;
+  timestamp.innerHTML = "Last updated " + pointData[pointData.length-1].date_added ;
 }
 
 map.scrollWheelZoom.disable();
