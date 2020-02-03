@@ -1,22 +1,22 @@
 {"stories": [
 	{
-		"link": "https://www.seattletimes.com/entertainment/music/seattle-times-albums-of-the-year-critics-poll-2019-the-individual-ballots/",
-		"image": "record.svg",
-		"head": "Seattle Times albums of the year critics poll 2019: The individual ballots"
+		"link": "https://www.seattletimes.com/seattle-news/crime/seattle-shootings-rise-6-in-2019-over-2018-with-the-greatest-increases-in-south-and-north-police-say/",
+		"image": "dontmiss1.jpg",
+		"head": "Seattle shootings rise 6% in 2019 over 2018, with the greatest increases in south and north, police say"
 	},
 	{
-		"link": "https://www.seattletimes.com/entertainment/music/5-new-northwest-albums-we-cant-put-down/",
-		"image": "dontmiss.jpg",
-		"head": "Need some fresh music? Here are 5 new Pacific Northwest albums we can’t put down"
-	},
-	{
-		"link": "https://www.seattletimes.com/entertainment/music/puget-sounds-the-top-12-new-albums-from-the-pacific-northwest/",
-		"image": "dontmiss2.jpg",
-		"head": "Puget Sounds: The top 12 new albums from the Pacific Northwest"
-	},
-	{
-		"link": "https://www.seattletimes.com/entertainment/music/the-best-seattle-albums-of-2018-critics-choose-the-top-20-releases-of-the-year/",
+		"link": "https://www.seattletimes.com/seattle-news/crime/new-rules-will-govern-investigations-of-police-shootings-in-washington-but-how-much-will-change/",
 		"image": "dontmiss3.jpg",
-		"head": "The best Seattle albums of 2018: Critics choose the top 20 releases of the year"
+		"head": "New rules will govern investigations of police shootings in Washington, but how much will change?"
+	},
+	{
+		"link": "https://www.seattletimes.com/seattle-news/crime/every-drop-of-blood-is-precious-how-new-training-helps-seattle-police-treat-victims-of-violence/",
+		"image": "dontmiss2.jpg",
+		"head": "How new training will help Seattle police treat victims of violence"
+	},
+	{
+		"link": "https://www.seattletimes.com/seattle-news/crime/prosecutors-shots-fired-project-collects-king-county-gun-violence-data-for-the-first-time/",
+		"image": "dontmiss4.jpg",
+		"head": "Shootings are contagious: Prosecutors study King County gun violence from a public-health angle"
 	}
 ]}
