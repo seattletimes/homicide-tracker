@@ -22,11 +22,11 @@
   }
 }
 
-.timestamp-container{
+.timestamp-container {
   width: 100%;
-  .timestamp{
+  .timestamp {
     margin: 10px 6px 10px 0;
-    font-size: 19px;
+    font-size: 17px;
     font-style: italic;
     color: @df-middle-gray;
   }
@@ -34,14 +34,12 @@
 
 .directions{
   font-size: 19px;
-
+  font-family: @df-sans;
   margin: 0 0 30px 0;
-  font-style: italic;
-  color: @df-middle-gray;
   text-align: center;
 }
 
-.filter-map-container{
+.filter-map-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -211,6 +209,7 @@ leaflet-map {
       float: right;
       margin: 0;
       padding: 3px;
+      font-family: @df-sans;
     }
       .clear-search{
         float: left;
@@ -348,8 +347,8 @@ background-color: #eeeeee;
   .panel {
     padding: 0 18px;
     background-color: white;
-    max-height: 0;
-    max-width: 630px;
+    max-height: 10px;
+    max-width: 780px;
     margin: auto;
     overflow: hidden;
     transition: max-height 0.2s ease-out;
@@ -375,18 +374,23 @@ background-color: #eeeeee;
     }
   }
 
+  .note {
+    margin: 20px auto 0px;
+    padding: 0 6px;
+    font-family: "ff-dagny-web-pro", Helvetica Neue, Helvetica, sans-serif;
+    max-width: 960px;
+    font-style: italic;
+    font-size: 0.8em;
+  }
+
   .credits {
-    margin: 40px auto;
+    margin: 20px auto 40px;
     padding: 0 6px;
     font-family: "ff-dagny-web-pro", Helvetica Neue, Helvetica, sans-serif;
     font-weight: bold;
     font-style: italic;
-    font-size: 1em;
     max-width: 960px;
-        font-style: normal;
-        font-size: 0.8em;
-    
-
+    font-size: 0.8em;
   }
 
 

@@ -218,8 +218,9 @@ function makeDataRow(element){
   rowHTML += "<div class='row-city'>" + element.city + "</div>"
             + "<div class='row-latest'><a href='" + element.url + "' class='data-table-link' target='_blank' rel='noopener noreferrer'>" + element.url_date + "</a></div> </div></button>";
 
-  var panel = "<div class='panel'> <p>" + element.description + "</p>";
-  panel += "<ul><li>Cause of death: " + element.cause_death_description + "</li>";
+  var panel = "<div class='panel'> <p>" + element.description + "</p>"; 
+  panel += "<ul><li>Location: " + element.location + ", " + element.city + "</li>";
+  panel += "<li>Cause of death: " + element.cause_death_description + "</li>";
   if(element.suspect_name){
     panel += "<li>Suspect: " + element.suspect_name;
     if(element.convicted){
