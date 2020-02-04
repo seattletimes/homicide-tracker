@@ -118,7 +118,7 @@ function addMarks(){
           }
         }
         if(mark){
-          marker = makeMark(pointData[x], x);         
+          marker = makeMark(pointData[x], x);
           markers.push(marker);
           marker.addTo(markergroup);
           filteredData.push(pointData[x]);
@@ -138,7 +138,7 @@ function makeMark(data, x){
     index: x,
     weight: 1.5,
     color: getColor(data)
-    }).on("click", markerClick); 
+    }).on("click", markerClick);
 }
 
 function getColor(element){
@@ -187,7 +187,7 @@ function markerClick(){
   var selectedRow = makeDataRow(pointData[this.options.index]);
   dataTable.innerHTML = selectedRow;
   var selectedPanel = document.querySelector(".panel");
-  selectedPanel.style.cssText = "max-height:" + (document.querySelector(".panel p").scrollHeight + 50) + "px";
+  selectedPanel.style.cssText = "max-height:" + (document.querySelector(".panel").scrollHeight) + "px";
   clickToSee.style.display = "none";
 }
 
@@ -208,7 +208,7 @@ map.scrollWheelZoom.disable();
 
 //Create data table
 function makeDataRow(element){
-  var rowHTML = "<button class='accordion'> <div class='row-title'> <div class='row-date'>" + element.date + "</div> <div class='row-name'>" 
+  var rowHTML = "<button class='accordion'> <div class='row-title'> <div class='row-date'>" + element.date + "</div> <div class='row-name'>"
                 + element.victim_name + ", " + element.victim_age ;
   if(element.victim2_name){
     rowHTML += " <br>" + element.victim2_name + ", " + element.victim2_age + "</div> ";
@@ -218,7 +218,7 @@ function makeDataRow(element){
   rowHTML += "<div class='row-city'>" + element.city + "</div>"
             + "<div class='row-latest'><a href='" + element.url + "' class='data-table-link' target='_blank' rel='noopener noreferrer'>" + element.url_date + "</a></div> </div></button>";
 
-  var panel = "<div class='panel'> <p>" + element.description + "</p>"; 
+  var panel = "<div class='panel'> <p>" + element.description + "</p>";
   panel += "<ul><li>Location: " + element.location + ", " + element.city + "</li>";
   panel += "<li>Cause of death: " + element.cause_death_description + "</li>";
   if(element.suspect_name){
@@ -234,7 +234,7 @@ function makeDataRow(element){
   if(element.updates){
     panel += "<li>Update(s): " + element.updates + "</li>";
   }
-  
+
   var urlText = "";
   if(element.url && element.url_date != ""){ urlText += makeURL(element.url, element.url_date)  }
   if(element.url2 && element.url2_date != ""){ urlText += ", " + makeURL(element.url2, element.url2_date)  }
@@ -242,7 +242,7 @@ function makeDataRow(element){
   if(element.url4 && element.url4_date != "" ){ urlText += ", " + makeURL(element.url4, element.url4_date)  }
 
   if(urlText != ""){panel += "<li> Read more: " + urlText + "</li></ul>"}
-  
+
   panel += "</div>";
   rowHTML += panel;
   return rowHTML;
@@ -277,7 +277,7 @@ I  }
 function makeAccordion(){
   var acc = document.getElementsByClassName("accordion");
   var i;
-  
+
   for (i = 0; i < acc.length; i++) {
     acc[i].addEventListener("click", function() {
       this.classList.toggle("active");
