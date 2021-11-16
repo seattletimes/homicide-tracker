@@ -10,7 +10,7 @@
   "dependencies": {
     "archieml": "^0.4.2",
     "async": "^1.2.1",
-    "aws-sdk": "^2.1.25",
+    "aws-sdk": "^2.814.0",
     "babel-preset-env": "^1.6.0",
     "babelify": "^7.3.0",
     "browser-pack-flat": "^3.0.5",
